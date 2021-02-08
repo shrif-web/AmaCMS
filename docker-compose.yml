@@ -6,8 +6,6 @@ services:
     volumes:
       - "./go:/go"
     container_name: amadev_app
-    ports:
-      - "8080:8080"
     tty: true
     depends_on:
       - db
@@ -35,13 +33,9 @@ services:
         hard: -1
     volumes:
       - elasticData:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.2
     container_name: amadev_kibana
-    ports:
-      - 5601:5601
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
