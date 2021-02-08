@@ -8,6 +8,13 @@ import sequelize from "./mysql.js"
 const hostname = "0.0.0.0";
 const port = 3000;
 
+try {
+    await sequelize.authenticate();
+    console.log('Connection to mysql has been established successfully.');
+} catch (error) {
+    console.error('Unable to connect to the database:', error);
+}
+
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
