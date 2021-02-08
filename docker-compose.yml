@@ -1,27 +1,32 @@
 version: '3'
 services:
   app:
-    build:
-      context: ./go
-    volumes:
-      - "./go:/go"
-    container_name: amadev_app
-    tty: true
+    container_name: amacms-app
+    restart: always
+    build: app
     depends_on:
       - db
       - elasticsearch
+    volumes: 
+      - ./app:/app
+      - /app/node_modules
+    environment:
+      - DB_DATABASE=amacms
+      - DB_USERNAME=root
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - ACCESS_TOKEN_SECRET
   db:
     image: mysql:latest
-    container_name: amadev_mysql
+    container_name: amacms-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: amadev
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=amacms
     volumes:
       - ./db-data:/var/lib/mysql
     tty: true
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
-    container_name: amadev_elasticsearch
+    container_name: amacms-elastic
     environment:
       - cluster.name=amadev_elasticsearch
       - discovery.type=single-node
@@ -35,13 +40,13 @@ services:
       - elasticData:/usr/share/elasticsearch/data
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.2
-    container_name: amadev_kibana
+    container_name: amacms-kibana
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - SERVER_BASEPATH=/kibana
   nginx:
-    container_name: amadev_nginx
+    container_name: amacms-nginx
     image: nginx:1.19.4-alpine
     ports:
       - 80:80
