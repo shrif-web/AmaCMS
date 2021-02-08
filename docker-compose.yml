@@ -37,23 +37,31 @@ services:
       - elasticData:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    networks:
-      - elastic
   kibana:
     image: docker.elastic.co/kibana/kibana:7.10.2
     container_name: amadev_kibana
     ports:
       - 5601:5601
     environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-    networks:
-      - elastic
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_BASEPATH=/kibana
+  nginx:
+    container_name: amadev_nginx
+    image: nginx:1.19.4-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
+      - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
+    depends_on:
+      - app
+      - elasticsearch
+      - kibana
+    restart: always
 
 volumes:
   elasticData:
     driver: local
-
-networks:
-  elastic:
-    driver: bridge
