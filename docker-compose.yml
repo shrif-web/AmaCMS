@@ -23,6 +23,8 @@ services:
       - MYSQL_DATABASE=amacms
     volumes:
       - ./db-data:/var/lib/mysql
+    ports: 
+      - 3306:3306
     tty: true
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
