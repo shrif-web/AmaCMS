@@ -15,7 +15,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.7",
-    "sequelize": "^6.5.0"
+    "sequelize": "^6.5.0",
+    "zarinpal-checkout": "^0.2.7"
   },
   "devDependencies": {},
   "scripts": {
