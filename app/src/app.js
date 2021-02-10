@@ -9,8 +9,6 @@ import { notFound } from "./controllers/default.controller.js"
 const hostname = "0.0.0.0";
 const port = 3000;
 
-console.log(tag)
-
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
