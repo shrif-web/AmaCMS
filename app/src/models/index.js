@@ -12,6 +12,4 @@ Tag.belongsToMany(Post, {
     through: 'PostTag'
 })
 
-await sequelize.sync()
-
 export default sequelize

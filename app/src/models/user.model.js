@@ -1,7 +1,10 @@
 import Types from "sequelize";
 import sequelize from "../services/mysql.js"
 
-const userRoles = ['admin', 'normal'];
+const ADMIN = 'admin'
+const NORMAL = 'normal'
+
+const userRoles = [ADMIN, NORMAL];
 
 const User = sequelize.define('User',
     {
@@ -28,7 +31,7 @@ const User = sequelize.define('User',
             allowNull: false,
             validate: {
                 isIn: {
-                    args: userRoles,
+                    args: [userRoles],
                     msg: "Role should be one of " + userRoles.join(", ")
                 }
             }
@@ -40,7 +43,12 @@ const User = sequelize.define('User',
     }, {
     instanceMethods: {
         getFullname: () => [this.firstname, this.lastname].join(' ')
-    }
+    },
 });
+
+User.roles = {
+    ADMIN: ADMIN,
+    NORMAL: NORMAL
+}
 
 export default User

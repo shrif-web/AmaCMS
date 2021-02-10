@@ -17,10 +17,9 @@ export const authorize = (req, res, next) => {
                 message: "Invalid authorization token"
             })
         }
-        const users = [{}]/* await User.find({
+        req.user = await User.find({
             email: user.email
-        }) */
-        req.user = users[0]
+        })
         next()
     })
 }

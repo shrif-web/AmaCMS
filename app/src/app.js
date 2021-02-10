@@ -5,6 +5,10 @@ import userRouter from "./routers/user.router.js"
 import paymentRouter from "./routers/payment.router.js"
 import searchRouter from "./routers/search.router.js"
 import { notFound } from "./controllers/default.controller.js"
+import sequelize from "./models/index.js"
+
+
+await sequelize.sync()
 
 const hostname = "0.0.0.0";
 const port = 3000;
