@@ -1,6 +1,6 @@
-import Category from "./Category.js"
-import Post from "./Post.js"
-import Tag from "./Tag.js"
+import Category from "./category.model.js"
+import Post from "./post.model.js"
+import Tag from "./tag.model.js"
 import sequelize from "../services/mysql.js"
 
 Category.belongsTo(Category)
