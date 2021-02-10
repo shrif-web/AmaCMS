@@ -28,7 +28,9 @@ Post.afterCreate(async (post, options) => {
         body: {
             title: post.title,
             imageUrl: post.imageUrl,
-            content: post.content
+            content: post.content,
+            views: post.views,
+            createdAt: post.createdAt,
         }
     })
 })
@@ -38,9 +40,13 @@ Post.afterUpdate(async (post, options) => {
         id: String(post.id),
         index: 'posts',
         body: {
-            title: post.title,
-            imageUrl: post.imageUrl,
-            content: post.content
+            doc: {
+                title: post.title,
+                imageUrl: post.imageUrl,
+                content: post.content,
+                views: post.views,
+                createdAt: post.createdAt,    
+            }
         }
     })
 })
