@@ -4,10 +4,6 @@ FROM node:15.5.0-alpine
 RUN mkdir -p /app
 WORKDIR /app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install --verbose
-
 COPY . /app/
 ENV NODE_ENV production
 
