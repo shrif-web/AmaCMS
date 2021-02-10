@@ -1,23 +1,23 @@
-const { Sequelize } = require("sequelize/types");
+import Types from "sequelize";
+import sequelize from "../services/mysql.js"
 
-module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('Post', 
+const Post = sequelize.define('Post',
     {
         id: {
-            type: Sequelize.INTEGER,
+            type: Types.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        title: Sequelize.STRING,
-        imageName: Sequelize.STRING,
-        content: Sequelize.TEXT,
+        title: Types.STRING,
+        imageName: Types.STRING,
+        content: Types.TEXT,
         views: {
-            type: Sequelize.INTEGER,
+            type: Types.INTEGER,
             defaultValue: 0
         }
     }, {
-        instanceMethods: {
-            
-        }
-    });
-};
+    instanceMethods: {
+    }
+});
+
+export default Post

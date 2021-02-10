@@ -1,16 +1,19 @@
-userRoles = ['admin', 'normal'];
+import Types from "sequelize";
+import sequelize from "../services/mysql.js"
 
-module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('User', {
+const userRoles = ['admin', 'normal'];
+
+const User = sequelize.define('User',
+    {
         id: {
-            type: Sequelize.INTEGER,
+            type: Types.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        firstName: Sequelize.STRING,
-        lastName: Sequelize.STRING,
+        firstName: Types.STRING,
+        lastName: Types.STRING,
         email: {
-            type: Sequelize.STRING,
+            type: Types.STRING,
             validate: {
                 isEmail: {
                     msg: 'Invalid email format'
@@ -18,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         role: {
-            type: Sequelize.ENUM,
+            type: Types.ENUM,
             values: userRoles,
             allowNull: false,
             validate: {
@@ -29,10 +32,11 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     }, {
-        instanceMethods: {
-            getFullname: function () {
-                return [this.firstname, this.lastname].join(' ');
-            }
+    instanceMethods: {
+        getFullname: function () {
+            return [this.firstname, this.lastname].join(' ');
         }
-    });
-};
+    }
+});
+
+export default User

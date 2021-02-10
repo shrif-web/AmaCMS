@@ -1,27 +1,17 @@
-import sequelize from "../mysql";
+import Category from "./Category.js"
+import Post from "./Post.js"
+import Tag from "./Tag.js"
+import sequelize from "../services/mysql.js"
 
-const Sequelize = require("sequelize");
+Category.belongsTo(Category)
+Post.belongsTo(Category)
+Post.belongsToMany(Tag, {
+    through: 'PostTag'
+})
+Tag.belongsToMany(Post, {
+    through: 'PostTag'
+})
 
+await sequelize.sync()
 
-//--------- Loading Models ---------//
-const models = [
-    'User',
-    'Category',
-    'Tag',
-    'Post',
-];
-models.forEach(function(model) {
-    module.exports[model] = sequelize.import(__dirname + '/' + model);
-});
-
-
-//--------- Relationships ---------//
-(function(m) {
-    m.Category.belongsTo(m.Category);
-    m.Post.belongsTo(m.Category);
-    m.Post.belongsToMany(m.Tag, {through: 'PostTag'});
-    m.Tag.belongsToMany(m.Post, {through: 'PostTag'});
-})(module.exports);
-
-module.exports.sequelize = sequelize;
-
+export default sequelize

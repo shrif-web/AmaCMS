@@ -1,14 +1,17 @@
-module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('Category', {
+import Types from "sequelize";
+import sequelize from "../services/mysql.js"
+
+const Category = sequelize.define('Category',
+    {
         id: {
-            type: Sequelize.INTEGER,
+            type: Types.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },
-        name: Sequelize.STRING
+        name: Types.STRING
     }, {
-        instanceMethods: {
-            
-        }
-    });
-};
+    instanceMethods: {
+    }
+})
+
+export default Category
