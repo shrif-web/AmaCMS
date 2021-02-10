@@ -13,10 +13,18 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.set('view engine', 'ejs');
+app.set('views', 'src/views')
+app.disable('view cache'); // for development
 
 app.use('/api', userRouter)
 app.use('/api/payment', paymentRouter)
 app.use('/api/search', searchRouter)
+app.get('/test-template', (req, res) => {
+    res.render('temp_test', {
+        name: "Test name"
+    });
+});
 
 app.all("*", notFound);
 
