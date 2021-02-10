@@ -18,7 +18,9 @@ const User = sequelize.define('User',
                 isEmail: {
                     msg: 'Invalid email format'
                 }
-            }
+            },
+            allowNull: false,
+            unique: true
         },
         role: {
             type: Types.ENUM,
@@ -30,12 +32,14 @@ const User = sequelize.define('User',
                     msg: "Role should be one of " + userRoles.join(", ")
                 }
             }
+        },
+        passwordHash: {
+            type: Types.STRING,
+            allowNull: false
         }
     }, {
     instanceMethods: {
-        getFullname: function () {
-            return [this.firstname, this.lastname].join(' ');
-        }
+        getFullname: () => [this.firstname, this.lastname].join(' ')
     }
 });
 

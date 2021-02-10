@@ -1,17 +1,22 @@
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js"
 
 const emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
 export const signup = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, firstName, lastName } = req.body
     
     if (!email || !password) return res.status(400).json({
             message: "request length should be 2."
         })
 
-    let users = [{}] //await User.find({ email: email })
+    let userExists = await User.count({
+        where: {
+            email: email
+        }
+    })
 
-    if (users.length) return res.status(409).json({
+    if (userExists) return res.status(409).json({
             message: "email already exists."
         })
     
@@ -22,12 +27,11 @@ export const signup = async (req, res) => {
     if (password.length < 5) return res.status(400).json({
             message: "field `password` length should be gt 5."
         })
-
-    const user = {} /* new User({
+    
+    const user = User.create({
         email: email,
-        password: password,
+        password: password
     })
-    await user.save() */
 
     res.status(201).json({
         message: "user has been created."
