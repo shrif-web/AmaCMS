@@ -1,20 +1,25 @@
 import elastic from '../services/elastic.js'
 
 export const search = async (req, res) => {
+    const query = req.query.q
     const { body } = await elastic.search({
         index: 'posts',
         body: {
             query: {
-                match: {
-                    content: {
-                        query: req.query.q,
-                        fuzziness: 2
-                    }
+                multi_match: {
+                    query: query,
+                    fuzziness: 2,
+                    fields: [
+                        'title',
+                        'content'
+                    ]
                 }
             },
             highlight: {
                 fields: {
-                    content: {}
+                    content: {
+                        number_of_fragments: 4
+                    }
                 }
             }
         }
