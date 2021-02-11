@@ -1,34 +1,29 @@
-import sequelize from "../models/index.js"
-import Category from "../models/category.model.js"
+import sequelize from "../../models/index.js"
+import Tag from "../../models/tag.model.js"
 
 export const index = async (req, res) => {
-    const categories = await Category.findAll();
+    const tags = await Tag.findAll();
 
-    res.render('admin/category/index', {
-        title: "Categories",
-        categories: categories
+    res.render('admin/tag/index', {
+        title: "Tags",
+        tags: tags
     });
 };
 
 export const create = async (req, res) => {
-    const categories = await Category.findAll();
-
-    res.render('admin/category/create', {
-        title: "Create a new Category",
-        parents: categories,
+    res.render('admin/tag/create', {
+        title: "Create a new Tag",
     });
 }
 
 export const store = async (req, res) => {
-    let { name, parent } = req.body
-    parent = parent == -1 ? null : parent
+    const { title } = req.body
 
     const transaction = await sequelize.transaction()
 
     try {
-        await Category.create({
-            name: name,
-            CategoryId: parent
+        await Tag.create({
+            name: title,
         }, {
             transaction: transaction
         })        
@@ -41,23 +36,23 @@ export const store = async (req, res) => {
         })
     }
 
-    res.redirect('/admin/category');
+    res.redirect('/admin/tag');
 }
 
 export const deleteTag = async (req, res) => {
     const id = req.params.id
-    const category = await Category.findOne({
+    const tag = await Tag.findOne({
         where: {id: id}
     })
 
-    if (category == null) {
-        res.redirect('/admin/category');
+    if (tag == null) {
+        res.redirect('/admin/tag');
     }
     
     const transaction = await sequelize.transaction()
 
     try {
-        await category.destroy({
+        await tag.destroy({
             transaction: transaction
         })
         await transaction.commit()
@@ -69,48 +64,42 @@ export const deleteTag = async (req, res) => {
         })
     }
 
-    res.redirect('/admin/category');
+    res.redirect('/admin/tag');
 }
 
 export const edit = async (req, res) => {
     const id = req.params.id
-    const category = await Category.findOne({
+    const tag = await Tag.findOne({
         where: {id: id}
     })
 
-    if (category == null) {
-        res.redirect('/admin/category');
+    if (tag == null) {
+        res.redirect('/admin/tag');
     }
 
-    const categories = await Category.findAll();
-
-    res.render('admin/category/edit', {
-        title: "Edit Category",
-        category: category,
-        parents: categories
+    res.render('admin/tag/edit', {
+        title: "Edit Tag",
+        tag: tag,
     });
 }
 
 export const update = async (req, res) => {
     const id = req.params.id
-    const category = await Category.findOne({
+    const tag = await Tag.findOne({
         where: {id: id}
     })
 
-    if (category == null) {
-        res.redirect('/admin/category');
+    if (tag == null) {
+        res.redirect('/admin/tag');
     }
     
-    let { name, parent } = req.body
-    parent = parent == -1 ? null : parent
-    
+    const { title } = req.body
     const transaction = await sequelize.transaction()
 
     try {
-        category.name = name
-        category.CategoryId = parent
+        tag.name = title
 
-        await category.save({
+        await tag.save({
             transaction: transaction
         })
         await transaction.commit()
@@ -122,5 +111,5 @@ export const update = async (req, res) => {
         })
     }
 
-    res.redirect('/admin/category');
+    res.redirect('/admin/tag');
 }
