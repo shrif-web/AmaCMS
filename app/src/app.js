@@ -6,6 +6,7 @@ import paymentRouter from "./routers/payment.router.js"
 import searchRouter from "./routers/search.router.js"
 import adminRouter from "./routers/admin.router.js"
 import tagRouter from "./routers/tag.router.js"
+import categoryRouter from "./routers/category.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import path from "path"
 
@@ -26,6 +27,7 @@ app.use('/api/payment', paymentRouter)
 app.use('/api/search', searchRouter)
 app.use('/admin', adminRouter)
 app.use('/admin/tag', tagRouter)
+app.use('/admin/category', categoryRouter)
 
 app.all("*", notFound);
 app.listen(port, hostname, () => {

@@ -1,0 +1,6 @@
+<% for(parent of parents) { %>
+    <% if(parent.CategoryId == parId) { %>
+        <option value="<%= parent.id %>" <%= parent.id == category.CategoryId ? "selected" : "" %> <%= parent.id == category.id ? "disabled" : "" %>><%= beforeStr %>-- <%= parent.name %></option>
+        <%- include('tree_options', {parId: parent.id, beforeStr: beforeStr + "      |"}) %>
+    <% } %>
+<% } %>
