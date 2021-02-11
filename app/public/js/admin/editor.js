@@ -41,6 +41,9 @@ const upload_handler = async (blobInfo, success, failure, progress) => {
 }
 
 tinymce.init({
+    relative_urls : false,
+    remove_script_host : false,
+    convert_urls : true,
     selector: 'textarea',
     plugins: 'print preview powerpaste casechange importcss searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker imagetools textpattern noneditable help formatpainter permanentpen pageembed charmap tinycomments mentions quickbars linkchecker emoticons advtable',
     mobile: {

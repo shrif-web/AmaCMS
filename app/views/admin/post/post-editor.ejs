@@ -25,18 +25,23 @@
                 <div class="card-header align-middle">
                     <div class="align-middle form-inline float-left h-100">
                         <i class="fal fa-sticky-note font-weight-bold float-left"></i>
-                        <h6 class="d-inline font-weight-light ml-2 font-weight-bold float-left">Create New Post</h6>
+                        <h6 class="d-inline font-weight-light ml-2 font-weight-bold float-left">
+                            <%= title %>
+                        </h6>
                     </div>
                     <div class="form-inline float-right">
                         <input id="post-title" class="form-control mx-2" type="text" placeholder="Title">
                         <input id="image-url" class="form-control mx-2" type="text" placeholder="Post Image">
                         <button id="upload-image-btn" class="btn btn-primary mx-2" data-toggle="modal"
                             data-target="#upload-modal">Upload Image</button>
-                        <button id="publish-btn" class="btn btn-success mx-2">Publish</button>
+                        <button onclick="submit('<%= submit_btn.method %>', '<%= submit_btn.url %>')"
+                            class="btn btn-success mx-2">
+                            <%= submit_btn.text %>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <textarea id="text-editor"></textarea>
+                    <textarea id="text-editor"><%= post.content %> </textarea>
                 </div>
             </div>
         </div>
@@ -62,8 +67,14 @@
         </div>
 
         <%- include('../common/js') %>
-            <script src="/js/admin/editor.js"></script>
-            <script src="/js/admin/post.js"></script>
+        <script src="/js/admin/editor.js"></script>
+        <script src="/js/admin/post.js"></script>
+        <script>
+            $(document).ready(() => {
+                $('#post-title').val('<%= post.title %>')
+                $('#image-url').val('<%= post.imageUrl %>')
+            })
+        </script>
 </body>
 
 </html>

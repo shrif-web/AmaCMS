@@ -1,4 +1,4 @@
-$('#publish-btn').click(() => {
+const submit = (method, url) => {
     const post = {
         title: $('#post-title').val(),
         imageUrl: $('#image-url').val(),
@@ -8,14 +8,14 @@ $('#publish-btn').click(() => {
     console.log(post)
 
     $.ajax({
-        url: '/api/post',
-        method: 'POST',
+        url: url,
+        method: method,
         contentType: 'application/json',
         data: JSON.stringify(post)
     }).done(response => {
         window.location = '/admin/post/'
     }).fail(response => alert(response.responseJSON.message))
-})
+}
 
 $('#upload-main-image-btn').click(() => {
     const formData = new FormData()
@@ -32,3 +32,23 @@ $('#upload-main-image-btn').click(() => {
         $("#upload-modal").modal('hide');
     }).fail(response => alert(response.responseJSON.message))
 })
+
+const deletePost = () => {
+    const id = Number($('#delete-id').html())
+    $.ajax({
+        url: `/api/post/${id}`,
+        method: 'DELETE',
+    }).done(response => {
+        window.location = '/admin/post/'
+    }).fail(response => alert(response.responseJSON.message))
+}
+
+const deletePostButton = (id, title) => {
+    $('#delete-title').html(title)
+    $('#delete-id').html(id)
+    $('#delete-modal').modal('show')
+}
+
+const editPost = id => {
+    window.location = `/admin/post/edit/${id}`
+}
