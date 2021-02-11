@@ -5,9 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel="stylesheet" type="text/css" href="css/common/fontawesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/common/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/admin/main.css">
+
+    <%- include('../common/style') %>
 </head>
 <body>
     <%- include('../common/nav') %>
@@ -23,8 +22,7 @@
             </div>
         </div>
     </div>
-    <script src="js/common/jquery-3.5.1.min.js"></script>
-    <script src="js/common/bootstrap.min.js"></script>
-    <script src="js/admin/main.js"></script>
+    
+    <%- include('../common/js') %>
 </body>
 </html>

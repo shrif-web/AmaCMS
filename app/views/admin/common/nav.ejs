@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="admin_nav">
     <div class="container">
         <ul class="p-2 nav" role="tablist">
             <li class="nav-item" role="presentation">
@@ -24,6 +24,23 @@
                     <a class="dropdown-item" href="">
                         <i class="fas fa-plus mr-2"></i>
                         Create User
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown nav-item-tags">
+                <a class="nav-link dropdown-toggle" href="#" id="usersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fad fa-tags"></i>
+                    Tags
+                </a>
+                <div class="dropdown-menu" aria-labelledby="usersDropdown">
+                    <a class="dropdown-item" href="/admin/tag/" class="d-flex align-items-center">
+                        <i class="fad fa-list-ul mr-2"></i>
+                        Tags List
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/tag/create">
+                        <i class="fas fa-plus mr-2"></i>
+                        Create Tag
                     </a>
                 </div>
             </li>
