@@ -1,6 +1,7 @@
 import Types from "sequelize";
-import elastic from "../services/elastic.js";
+import elastic from "../services/elastic.js"
 import sequelize from "../services/mysql.js"
+import { htmlToText } from 'html-to-text'
 
 const Post = sequelize.define('Post',
     {
@@ -21,14 +22,28 @@ const Post = sequelize.define('Post',
     }
 });
 
+const htmlToTextOptions = {
+    tags: {
+        a: {
+            options: {
+                ignoreHref: true
+            }
+        },
+        img: {
+            format: 'skip'
+        }
+    }
+}
+
 Post.afterCreate(async (post, options) => {
+    const plainContent = htmlToText(post.content, htmlToTextOptions)
     await elastic.create({
         id: String(post.id),
         index: 'posts',
         body: {
             title: post.title,
             imageUrl: post.imageUrl,
-            content: post.content,
+            content: plainContent,
             views: post.views,
             createdAt: post.createdAt,
         }
@@ -36,6 +51,7 @@ Post.afterCreate(async (post, options) => {
 })
 
 Post.afterUpdate(async (post, options) => {
+    const plainContent = htmlToText(post.content, htmlToTextOptions)
     await elastic.update({
         id: String(post.id),
         index: 'posts',
@@ -43,7 +59,7 @@ Post.afterUpdate(async (post, options) => {
             doc: {
                 title: post.title,
                 imageUrl: post.imageUrl,
-                content: post.content,
+                content: plainContent,
                 views: post.views,
                 createdAt: post.createdAt,    
             }

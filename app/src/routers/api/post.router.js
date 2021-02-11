@@ -13,7 +13,4 @@ router.route('/:id')
     .put(update)
     .delete(deleteById)
 
-router.route('/create')
-    .get(createView)
-
 export default router

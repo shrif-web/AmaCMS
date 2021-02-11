@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
+import fileUpload from "express-fileupload"
 import apiRouter from "./routers/api/api.router.js"
 import adminRouter from "./routers/admin/admin.router.js"
 import { notFound } from "./controllers/default.controller.js"
@@ -11,13 +12,18 @@ await sequelize.sync()
 
 const hostname = "0.0.0.0";
 const port = 3000;
-const __dirname = path.resolve()    
+const __dirname = path.resolve()
 
 const app = express()
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+}))
 app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
