@@ -1,4 +1,4 @@
-import elastic from '../services/elastic.js'
+import elastic from '../../services/elastic.js'
 
 export const search = async (req, res) => {
     const query = req.query.q

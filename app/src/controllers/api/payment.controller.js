@@ -1,4 +1,4 @@
-import zarinpal from "../services/zarinpal.js"
+import zarinpal from "../../services/zarinpal.js"
 
 export const request = (req, res) => {
     const client = zarinpal.getClient()

@@ -1,13 +1,8 @@
 import express from "express"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
-import userRouter from "./routers/user.router.js"
-import paymentRouter from "./routers/payment.router.js"
-import searchRouter from "./routers/search.router.js"
-import postRouter from "./routers/post.router.js"
-import adminRouter from "./routers/admin.router.js"
-import tagRouter from "./routers/tag.router.js"
-import categoryRouter from "./routers/category.router.js"
+import apiRouter from "./routers/api/api.router.js"
+import adminRouter from "./routers/admin/admin.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
 import path from "path"
@@ -26,13 +21,8 @@ app.use(cookieParser())
 app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
-app.use('/api', userRouter)
-app.use('/api/post', postRouter)
-app.use('/api/payment', paymentRouter)
-app.use('/api/search', searchRouter)
+app.use('/api', apiRouter)
 app.use('/admin', adminRouter)
-app.use('/admin/tag', tagRouter)
-app.use('/admin/category', categoryRouter)
 
 app.all("*", notFound);
 app.listen(port, hostname, () => {

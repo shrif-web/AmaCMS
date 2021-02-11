@@ -1,5 +1,5 @@
-import sequelize from "../models/index.js"
-import Post from "../models/post.model.js"
+import sequelize from "../../models/index.js"
+import Post from "../../models/post.model.js"
 
 export const create = async (req, res) => {
     const { title, imageUrl, content } = req.body

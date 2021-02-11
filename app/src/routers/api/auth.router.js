@@ -1,7 +1,7 @@
 import express from "express"
-import { signup, signin, read } from "../controllers/user.controller.js"
-import { generateMethodNotAllowed } from "../controllers/default.controller.js"
-import { authorize } from "../middlewares/auth.js"
+import { signup, signin, read } from "../../controllers/api/auth.controller.js"
+import { generateMethodNotAllowed } from "../../controllers/default.controller.js"
+import { authorize } from "../../middlewares/auth.js"
 
 const router = express.Router()
 

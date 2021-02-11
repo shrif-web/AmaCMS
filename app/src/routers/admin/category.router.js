@@ -1,5 +1,5 @@
 import express from "express"
-import { index, create, store, deleteTag, edit, update } from "../controllers/category.controller.js"
+import { index, create, store, deleteTag, edit, update } from "../../controllers/admin/category.controller.js"
 
 const router = express.Router()
 
