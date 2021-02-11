@@ -1,0 +1,16 @@
+<% for(category of categories) { %>
+    <% if(category.CategoryId == parId) { %>
+        <li>
+            <div class="single-category" style="display: inline-block;">
+                <%= category.name %>
+                <div style="display: inline-block; opacity: 0.4;" class="ml-1 category-action">
+                    <a href="/admin/category/delete/<%= category.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
+                    <a href="/admin/category/edit/<%= category.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
+                </div>
+            </div>
+            <ul>
+                <%- include('tree_categories', {parId: category.id}) %>
+            </ul>
+        </li>
+    <% } %>
+<% } %>

@@ -5,35 +5,37 @@ import userRouter from "./routers/user.router.js"
 import paymentRouter from "./routers/payment.router.js"
 import searchRouter from "./routers/search.router.js"
 import postRouter from "./routers/post.router.js"
+import adminRouter from "./routers/admin.router.js"
+import tagRouter from "./routers/tag.router.js"
+import categoryRouter from "./routers/category.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
-
+import { notFound } from "./controllers/default.controller.js"
+import path from "path"
 
 await sequelize.sync()
 
 const hostname = "0.0.0.0";
 const port = 3000;
+const __dirname = path.resolve()    
 
 const app = express()
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.set('view engine', 'ejs');
-app.set('views', 'src/views')
 app.disable('view cache'); // for development
 
 app.use('/api', userRouter)
 app.use('/api/post', postRouter)
 app.use('/api/payment', paymentRouter)
 app.use('/api/search', searchRouter)
-app.get('/test-template', (req, res) => {
-    res.render('temp_test', {
-        name: "Test name"
-    });
-});
+app.use('/admin', adminRouter)
+app.use('/admin/tag', tagRouter)
+app.use('/admin/category', categoryRouter)
 
 app.all("*", notFound);
-
 app.listen(port, hostname, () => {
     console.log(`server running at http://${hostname}:${port}/`);
 });
