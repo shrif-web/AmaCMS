@@ -1,7 +1,10 @@
 import Types from "sequelize";
 import sequelize from "../services/mysql.js"
 
-const userRoles = ['admin', 'normal'];
+const ADMIN = 'admin'
+const NORMAL = 'normal'
+
+const userRoles = [ADMIN, NORMAL];
 
 const User = sequelize.define('User',
     {
@@ -18,7 +21,9 @@ const User = sequelize.define('User',
                 isEmail: {
                     msg: 'Invalid email format'
                 }
-            }
+            },
+            allowNull: false,
+            unique: true
         },
         role: {
             type: Types.ENUM,
@@ -26,17 +31,24 @@ const User = sequelize.define('User',
             allowNull: false,
             validate: {
                 isIn: {
-                    args: userRoles,
+                    args: [userRoles],
                     msg: "Role should be one of " + userRoles.join(", ")
                 }
             }
+        },
+        passwordHash: {
+            type: Types.STRING,
+            allowNull: false
         }
     }, {
     instanceMethods: {
-        getFullname: function () {
-            return [this.firstname, this.lastname].join(' ');
-        }
-    }
+        getFullname: () => [this.firstname, this.lastname].join(' ')
+    },
 });
+
+User.roles = {
+    ADMIN: ADMIN,
+    NORMAL: NORMAL
+}
 
 export default User

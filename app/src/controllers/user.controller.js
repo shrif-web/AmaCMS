@@ -1,33 +1,45 @@
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js"
+import bcrypt from "bcryptjs"
+
 
 const emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
 export const signup = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, firstName, lastName } = req.body
     
     if (!email || !password) return res.status(400).json({
             message: "request length should be 2."
         })
 
-    let users = [{}] //await User.find({ email: email })
+    let userExists = await User.count({
+        where: {
+            email: email
+        }
+    })
 
-    if (users.length) return res.status(409).json({
-            message: "email already exists."
-        })
-    
+    if (userExists) return res.status(409).json({
+        message: "email already exists."
+    })
+
     if (!emailReg.test(email)) return res.status(400).json({
-            message: "field `email` is not valid."
-        })
+        message: "field `email` is not valid."
+    })
     
     if (password.length < 5) return res.status(400).json({
-            message: "field `password` length should be gt 5."
-        })
-
-    const user = {} /* new User({
-        email: email,
-        password: password,
+        message: "field `password` length should be gt 5."
     })
-    await user.save() */
+    
+    const salt = await bcrypt.genSalt(10)
+    const pHash = await bcrypt.hash(password, salt)
+    
+    await User.create({
+        email: email,
+        passwordHash: pHash,
+        firstName: firstName,
+        lastName: lastName,
+        role: User.roles.NORMAL
+    })
 
     res.status(201).json({
         message: "user has been created."
@@ -45,14 +57,19 @@ export const signin = async (req, res) => {
         message: "field `email` is not valid."
     })
 
-    let users = [{}]/* await User.find({
-        email: email,
-        password: password
-    }) */
+    let user = await User.findOne({
+        email: email
+    })
 
-    if (!users.length) {
+    if (user == null) {
         return res.status(401).json({
-            message: "wrong email or password"
+            message: "wrong email"
+        })
+    }
+
+    if (!bcrypt.compareSync(password, user.passwordHash)) {
+        return res.status(401).json({
+            message: "wrong password"
         })
     }
 

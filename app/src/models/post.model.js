@@ -1,4 +1,5 @@
 import Types from "sequelize";
+import elastic from "../services/elastic.js";
 import sequelize from "../services/mysql.js"
 
 const Post = sequelize.define('Post',
@@ -9,7 +10,7 @@ const Post = sequelize.define('Post',
             primaryKey: true
         },
         title: Types.STRING,
-        imageName: Types.STRING,
+        imageUrl: Types.STRING,
         content: Types.TEXT,
         views: {
             type: Types.INTEGER,
@@ -19,5 +20,42 @@ const Post = sequelize.define('Post',
     instanceMethods: {
     }
 });
+
+Post.afterCreate(async (post, options) => {
+    await elastic.create({
+        id: String(post.id),
+        index: 'posts',
+        body: {
+            title: post.title,
+            imageUrl: post.imageUrl,
+            content: post.content,
+            views: post.views,
+            createdAt: post.createdAt,
+        }
+    })
+})
+
+Post.afterUpdate(async (post, options) => {
+    await elastic.update({
+        id: String(post.id),
+        index: 'posts',
+        body: {
+            doc: {
+                title: post.title,
+                imageUrl: post.imageUrl,
+                content: post.content,
+                views: post.views,
+                createdAt: post.createdAt,    
+            }
+        }
+    })
+})
+
+Post.afterDestroy(async (post, options) => {
+    await elastic.delete({
+        id: String(post.id),
+        index: 'posts',
+    })
+})
 
 export default Post
