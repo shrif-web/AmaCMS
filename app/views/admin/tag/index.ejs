@@ -27,12 +27,12 @@
                     <% if (tags.length > 0) { %>
                         <% for (tag of tags) { %>
                             <tr>
-                                <td style="width: 10%;"><%= tag.id %></th>
-                                <td><%= tag.name %></th>
+                                <td style="width: 10%;"><%= tag.id %></td>
+                                <td><%= tag.name %></td>
                                 <td style="width: 10%;">
                                     <a href="/admin/tag/delete/<%= tag.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
                                     <a href="/admin/tag/edit/<%= tag.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
-                                </th>
+                                </td>
                             </tr>
                         <% } %>
                     <% } else { %>

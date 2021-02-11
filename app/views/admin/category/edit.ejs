@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <%- include('../common/style') %>
+</head>
+<body>
+    <%- include('../common/nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-tag font-weight-bold"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Edit Category</h4>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST" >
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Name of the tag" name="name" value="<%= category.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="parent">Parent</label>
+                        <select class="form-control col-sm-12 col-md-4" name="parent" size="<%= parents.length + 1 %>" style="overflow: hidden;" id="parentOptions">
+                            <option value="-1">No Parent</option>
+                            <%- include('tree_options', {parId: null, beforeStr: "|", level: 0}) %>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../common/js') %>
+    <script>
+        $(document).ready(function () {
+            $("#parentOptions option").each(function () {
+                let val = $(this).text();
+                val = val.replace(/ /g, '&nbsp;');
+                $(this).html(val);
+            })
+        });
+    </script>
+</body>
+</html>
