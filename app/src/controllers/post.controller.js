@@ -28,6 +28,12 @@ export const create = async (req, res) => {
     })
 }
 
+export const createView = async (req, res) => {
+    res.render('admin/post/create', {
+        title: "Create a new Post",
+    });
+}
+
 export const deleteById = async (req, res) => {
     const id = req.params.id
     const post = await Post.findOne({
