@@ -1,19 +1,6 @@
 import sequelize from "../models/index.js"
 import Category from "../models/category.model.js"
 
-const createComment = (parentId, name) => {
-    return Category.create({
-        name: name,
-        parentId: parentId,
-    })
-        .then((category) => {
-            return comment;
-        })
-        .catch((err) => {
-            console.log(">> Error while creating comment: ", err);
-        });
-};
-
 export const index = async (req, res) => {
     const categories = await Category.findAll();
 
