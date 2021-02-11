@@ -10,7 +10,6 @@ import tagRouter from "./routers/tag.router.js"
 import categoryRouter from "./routers/category.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
-import { notFound } from "./controllers/default.controller.js"
 import path from "path"
 
 await sequelize.sync()
