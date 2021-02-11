@@ -27,7 +27,7 @@
                         <label for="parent">Parent</label>
                         <select class="form-control col-sm-12 col-md-4" name="parent" size="<%= parents.length + 1 %>" style="overflow: hidden;" id="parentOptions">
                             <option value="-1">No Parent</option>
-                            <%- include('tree_options', {parId: null, beforeStr: "|"}) %>
+                            <%- include('tree_options', {parId: null, beforeStr: "|", level: 0}) %>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

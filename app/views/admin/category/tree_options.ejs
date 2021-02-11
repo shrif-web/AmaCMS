@@ -1,6 +1,21 @@
-<% for(parent of parents) { %>
+<% for(let indexPar = 0; indexPar < parents.length; indexPar++) { %>
+    <% parent = parents[indexPar]; %>
     <% if(parent.CategoryId == parId) { %>
         <option value="<%= parent.id %>" <%= parent.id == category.CategoryId ? "selected" : "" %> <%= parent.id == category.id ? "disabled" : "" %>><%= beforeStr %>-- <%= parent.name %></option>
-        <%- include('tree_options', {parId: parent.id, beforeStr: beforeStr + "      |"}) %>
+        <%
+        let isLast = true;
+        for(let tmpIndex = indexPar + 1; tmpIndex < parents.length; tmpIndex++) {
+            if(parents[tmpIndex].CategoryId == parId) {
+                isLast = false;
+            }
+        }
+        let nth = 0;
+        if (isLast) {
+            beforeStr = beforeStr.replace(/\|/g, function(match, i, original) {
+                return (nth++ === level) ? " " : match;
+            });
+        }
+        %>
+        <%- include('tree_options', {parId: parent.id, beforeStr: beforeStr + "      |", level: level + 1}) %>
     <% } %>
 <% } %>
