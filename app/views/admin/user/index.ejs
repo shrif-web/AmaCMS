@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+
+    <%- include('../common/style') %>
+    <style>
+        span.role {
+            color: white;
+            border-radius: 4px;
+            padding: 5px 10px;;
+            text-transform: capitalize;
+        }
+        span.role-admin {
+            background: #e74c3c;
+        }
+        span.role-normal {
+            background: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../common/nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-users font-weight-bold"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Users</h4>
+                <a href="/admin/user/create" class="btn btn-sm btn-outline-success float-right"><i class="fa fa-plus"></i> Create User</a>
+            </div>
+            <div class="card-body">
+                <% if (messages.info && messages.info.length) { %>
+                    <% for(let msg of messages.info) { %>
+                        <div class="alert alert-info">
+                            <%= msg %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <% if (messages.error && messages.error.length) { %>
+                    <% for(let msg of messages.error) { %>
+                        <div class="alert alert-danger">
+                            <%= msg %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>email</th>
+                        <th>Role</th>
+                        <th>Operation</th>
+                    </tr>
+                    <% if (users.length > 0) { %>
+                        <% for (u of users) { %>
+                            <tr>
+                                <td><%= u.id %></td>
+                                <td><%= u.firstName %></td>
+                                <td><%= u.lastName %></td>
+                                <td><%= u.email %></td>
+                                <td>
+                                    <span class="role role-<%= u.role %>">
+                                        <%= u.role %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="/admin/user/delete/<%= u.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="/admin/user/edit/<%= u.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="3">
+                                <div class="alert alert-info mt-2 text-center">No Tags created yet</div>
+                            </th>
+                        </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../common/js') %>
+</body>
+</html>

@@ -9,6 +9,7 @@ import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
 import path from "path"
 import session from "express-session"
+import { flash } from "express-flash-message"
 
 await sequelize.sync()
 
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET}));
+app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/',
@@ -31,7 +33,7 @@ app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
 app.use(function(req, res, next) {
-    res.locals.user = req.session.user;
+    res.locals.currentUser = req.session.user;
     next();
 });
 
