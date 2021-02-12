@@ -17,11 +17,6 @@ const User = sequelize.define('User',
         lastName: Types.STRING,
         email: {
             type: Types.STRING,
-            validate: {
-                isEmail: {
-                    msg: 'Invalid email format'
-                }
-            },
             allowNull: false,
             unique: true
         },
