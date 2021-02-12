@@ -37,7 +37,9 @@ const User = sequelize.define('User',
         }
     }, {
     instanceMethods: {
-        getFullname: () => [this.firstname, this.lastname].join(' ')
+        getFullName: function() {
+            return [this.firstName, this.lastName].join(' ')
+        }
     },
 });
 
@@ -45,5 +47,10 @@ User.roles = {
     ADMIN: ADMIN,
     NORMAL: NORMAL
 }
+
+User.rolesArr = [
+    NORMAL,
+    ADMIN,
+];
 
 export default User
