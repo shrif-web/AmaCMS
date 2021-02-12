@@ -1,13 +1,14 @@
 import Package from "../../models/package.model.js"
 
 export const create = async (req, res) => {
-    const { title, imageUrl, description, fileUrl } = req.body
+    const { title, imageUrl, description, fileUrl, price } = req.body
 
     await Package.create({
         title: title,
         imageUrl: imageUrl,
         description: description,
         fileUrl: fileUrl,
+        price: price
     })
 
     return res.status(201).json({
@@ -39,7 +40,7 @@ export const deleteById = async (req, res) => {
 
 export const update = async (req, res) => {
     const id = req.params.id
-    const { title, imageUrl, description, fileUrl } = req.body
+    const { title, imageUrl, description, fileUrl, price } = req.body
     const the_package = await Package.findOne({
         where: {
             id: id
@@ -56,6 +57,7 @@ export const update = async (req, res) => {
     the_package.imageUrl = imageUrl === undefined ? the_package.imageUrl : imageUrl
     the_package.description = description === undefined ? the_package.description : description
     the_package.fileUrl = fileUrl === undefined ? the_package.fileUrl : fileUrl
+    the_package.price = price === undefined ? the_package.price : price
 
     await the_package.save()
 
