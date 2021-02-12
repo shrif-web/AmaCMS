@@ -16,7 +16,7 @@ export const upload = async (req, res) => {
 
     fs.access(path.join(__dirname, dir), async err => {
         if (err) {
-            await fs.promises.mkdir(dir, { recursive: true })
+            await fs.promises.mkdir(path.join(__dirname, dir), { recursive: true })
         }
 
         file.mv(path.join(__dirname, filePath), err => {
