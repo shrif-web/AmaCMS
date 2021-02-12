@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+
+    <script src="https://cdn.tiny.cloud/1/cvwn7umpm54scejbhuydmt8r58tq4pavp7dlbonn1i6yvfij/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
+
+    <%- include('../common/style') %>
+</head>
+
+<body>
+    <%- include('../common/nav') %>
+
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-header align-middle">
+                    <div>
+                        <i class="fal fa-suitcase font-weight-bold"></i>
+                        <h6 class="d-inline font-weight-light ml-2 font-weight-bold">
+                            <%= title %>
+                        </h6>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <input id="package-title" class="form-control col m-1" type="text" placeholder="Title">
+                        <input id="package-price" class="form-control col-3 m-1" type="number" placeholder="Price">
+                        <button onclick="submit('<%= submit_btn.method %>', '<%= submit_btn.url %>')"
+                            class="btn btn-success m-1">
+                            <%= submit_btn.text %>
+                        </button>
+                    </div>
+                    <div class="form-row">
+                        <input id="image-url" class="form-control col m-1" type="text" placeholder="Package Image">
+                        <button class="btn btn-primary m-1" data-toggle="modal"
+                            data-target="#upload-image-modal">Upload Image</button>
+                        <input id="file-url" class="form-control col m-1" type="text" placeholder="Package File">
+                        <button class="btn btn-primary m-1" data-toggle="modal"
+                            data-target="#upload-file-modal">Upload File</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <textarea id="text-editor"><%= the_package.description %> </textarea>
+                </div>
+            </div>
+        </div>
+
+        <% for (type of ['image', 'file']) { %> 
+            <!-- Upload <%= type %> Modal -->
+            <div class="modal fade" id="upload-<%= type %>-modal" tabindex="-1" role="dialog" aria-labelledby="upload-<%= type %>-modal"
+                aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="upload-<%= type %>-modal-label">Upload <%= type %></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <input type="file" name="file" id="package-<%= type %>">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button onclick="uploadFile('<%= type %>')" type="button" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <% } %>
+
+        <%- include('../common/js') %>
+            <script src="/js/admin/editor.js"></script>
+            <script src="/js/admin/package.js"></script>
+            <script>
+                $(document).ready(() => {
+                    $('#package-title').val('<%= the_package.title %>')
+                    $('#image-url').val('<%= the_package.imageUrl %>')
+                    $('#file-url').val('<%= the_package.fileUrl %>')
+                    $('#package-price').val('<%= the_package.price %>')
+                })
+            </script>
+</body>
+
+</html>
