@@ -1,10 +1,10 @@
-<% if(user) { %>
+<% if(currentUser) { %>
     <h3>you're logged in</h3>
     <ul>
-        <li><%= user.firstName %></li>
-        <li><%= user.lastName %></li>
-        <li><%= user.role %></li>
-        <li><%= user.email %></li>
+        <li><%= currentUser.firstName %></li>
+        <li><%= currentUser.lastName %></li>
+        <li><%= currentUser.role %></li>
+        <li><%= currentUser.email %></li>
     </ul>
 <% } else { %>
     <h3>you're not logged in</h3>

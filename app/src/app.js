@@ -9,6 +9,7 @@ import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
 import path from "path"
 import session from "express-session"
+import { flash } from "express-flash-message"
 import redis from 'redis'
 import ConnectRedis from 'connect-redis'
 
@@ -36,6 +37,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 app.use(fileUpload({
     useTempFiles: true,
@@ -45,7 +47,7 @@ app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
 app.use(function(req, res, next) {
-    res.locals.user = req.session.user;
+    res.locals.currentUser = req.session.user;
     next();
 });
 
