@@ -9,8 +9,10 @@ services:
       - elasticsearch
       - cache
     volumes: 
-      - ./app:/app
-      - ./app/node_modules:/app/node_modules
+      - ./app/public:/app/public
+      - ./app/src:/app/src
+      - ./app/static:/app/static
+      - ./app/views:/app/views
     environment:
       - DB_DATABASE=amacms
       - DB_USERNAME=root
