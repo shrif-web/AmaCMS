@@ -4,9 +4,11 @@ import cookieParser from "cookie-parser"
 import fileUpload from "express-fileupload"
 import apiRouter from "./routers/api/api.router.js"
 import adminRouter from "./routers/admin/admin.router.js"
+import authRouter from "./routers/auth/auth.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
 import path from "path"
+import session from "express-session"
 
 await sequelize.sync()
 
@@ -19,7 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(session({secret: process.env.SESSION_SECRET}));
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/',
@@ -27,8 +30,14 @@ app.use(fileUpload({
 app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
+app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+});
+
 app.use('/api', apiRouter)
 app.use('/admin', adminRouter)
+app.use('/', authRouter)
 
 app.all("*", notFound);
 app.listen(port, hostname, () => {

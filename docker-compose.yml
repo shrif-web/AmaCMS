@@ -19,6 +19,7 @@ services:
       - ELASTIC_PASSWORD
       - PAYMENT_MERCHANT
       - PAYMENT_MOCK
+      - SESSION_SECRET
   db:
     image: mysql:latest
     container_name: amacms-mysql
