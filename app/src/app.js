@@ -22,7 +22,7 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({secret: "Some Secret from env"}));
+app.use(session({secret: process.env.SESSION_SECRET}));
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/',
