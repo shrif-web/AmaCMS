@@ -17,19 +17,19 @@ export const create = async (req, res) => {
 
 export const deleteById = async (req, res) => {
     const id = req.params.id
-    const package = await Package.findOne({
+    const the_package = await Package.findOne({
         where: {
             id: id
         }
     })
 
-    if (package == null) {
+    if (the_package == null) {
         return res.status(404).json({
             message: `there's no post with id ${id}`
         })
     }
 
-    await package.destroy()
+    await the_package.destroy()
 
     res.status(200).json({
         message: `Deleted!`
@@ -40,24 +40,24 @@ export const deleteById = async (req, res) => {
 export const update = async (req, res) => {
     const id = req.params.id
     const { title, imageUrl, description, fileUrl } = req.body
-    const package = await Package.findOne({
+    const the_package = await Package.findOne({
         where: {
             id: id
         }
     })
 
-    if (package == null) {
+    if (the_package == null) {
         return res.status(404).json({
             message: `there's no post with id ${id}`
         })
     }
 
-    package.title = title === undefined ? package.title : title
-    package.imageUrl = imageUrl === undefined ? package.imageUrl : imageUrl
-    package.description = description === undefined ? package.description : description
-    package.fileUrl = fileUrl === undefined ? package.fileUrl : fileUrl
+    the_package.title = title === undefined ? the_package.title : title
+    the_package.imageUrl = imageUrl === undefined ? the_package.imageUrl : imageUrl
+    the_package.description = description === undefined ? the_package.description : description
+    the_package.fileUrl = fileUrl === undefined ? the_package.fileUrl : fileUrl
 
-    await package.save()
+    await the_package.save()
 
     res.status(200).json({
         message: `Updated!`
@@ -66,19 +66,19 @@ export const update = async (req, res) => {
 
 export const get = async (req, res) => {
     const id = req.params.id
-    const package = await Package.findOne({
+    const the_package = await Package.findOne({
         where: {
             id: id
         }
     })
 
-    if (package == null) {
+    if (the_package == null) {
         return res.status(404).json({
             message: `there's no post with id ${id}`
         })
     }
 
-    res.status(200).json(package)
+    res.status(200).json(the_package)
 }
 
 export const getAll = async (req, res) => {
