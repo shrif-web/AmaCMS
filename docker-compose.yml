@@ -7,6 +7,7 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - cache
     volumes: 
       - ./app:/app
       - ./app/node_modules:/app/node_modules
@@ -20,6 +21,9 @@ services:
       - PAYMENT_MERCHANT
       - PAYMENT_MOCK
       - SESSION_SECRET
+  cache:
+    container_name: amacms-redis
+    image: redis:latest
   db:
     image: mysql:latest
     container_name: amacms-mysql

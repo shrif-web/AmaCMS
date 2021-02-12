@@ -10,6 +10,8 @@ import sequelize from "./models/index.js"
 import path from "path"
 import session from "express-session"
 import { flash } from "express-flash-message"
+import redis from 'redis'
+import ConnectRedis from 'connect-redis'
 
 await sequelize.sync()
 
@@ -23,8 +25,20 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({secret: process.env.SESSION_SECRET}));
+
+const RedisStore = ConnectRedis(session)
+const redisClient = redis.createClient('redis://cache')
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    store: new RedisStore({
+        client: redisClient,
+        ttl: 260,
+    }),
+    resave: false,
+    saveUninitialized: false,
+}));
 app.use(flash({ sessionKeyName: 'flashMessage' }));
+
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/',
