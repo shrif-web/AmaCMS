@@ -37,7 +37,7 @@ export const deleteById = async (req, res) => {
     })
 
     if (post == null) {
-        return res.status(200).json({
+        return res.status(404).json({
             message: `there's no post with id ${id}`
         })
     }
@@ -73,7 +73,7 @@ export const update = async (req, res) => {
     })
 
     if (post == null) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: `there's no post with id ${id}`
         })
     }
