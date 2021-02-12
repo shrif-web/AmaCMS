@@ -119,6 +119,8 @@ dist
 !.vscode/launch.json
 *.code-workspace
 
+static
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
