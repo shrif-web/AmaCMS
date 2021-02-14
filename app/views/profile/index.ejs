@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <%- include('../common/style') %>
+</head>
+    <%- include('nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-user-cog fa-2x"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Profile</h4>
+            </div>
+            <div class="card-body">
+                <% if (messages.info && messages.info.length) { %>
+                    <% for(let msg of messages.info) { %>
+                        <div class="alert alert-info">
+                            <%= msg %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <h5 class="d-flex align-items-center">
+                    <i class="fal fa-address-card mr-2" style="font-size: 30px;"></i>
+                    Information
+                    <a href="/profile/edit" class="btn btn-sm btn-outline-success ml-auto">
+                        <i class="fal fa-edit mr-1"></i>
+                        Edit
+                    </a>
+                </h5>
+                <hr>
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr>
+                        <td><%= user.firstName %></td>
+                        <td><%= user.lastName %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.role %></td>
+                    </tr>
+                </table>
+
+                <nav class="mt-5">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active text-danger" id="nav-favorite-tab" data-toggle="tab" href="#nav-favorite" role="tab" aria-controls="nav-favorite" aria-selected="true">
+                            <i class="fal fa-heart"></i> 
+                            Favorite Posts
+                        </a>
+                        <a class="nav-item nav-link text-primary" id="nav-package-tab" data-toggle="tab" href="#nav-package" role="tab" aria-controls="nav-package" aria-selected="false">
+                            <i class="fal fa-suitcase"></i> 
+                            My Packages
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="tab-content pt-4" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-favorite" role="tabpanel" aria-labelledby="nav-trefavoritee">
+                        My Fav.
+                    </div>
+                    <div class="tab-pane fade" id="nav-package" role="tabpanel" aria-labelledby="nav-package">
+                        My Pack.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../common/js') %>
+</body>
+</html>

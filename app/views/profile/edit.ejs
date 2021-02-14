@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <%- include('../common/style') %>
+</head>
+    <%- include('nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-address-card fa-2x"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Information</h4>
+            </div>
+            <div class="card-body">
+                <% if (locals.errors) { %>
+                    <% for (error of errors) { %>
+                        <div class="alert alert-danger">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" name="email" autocomplete="off" value="<%= user.email %>">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Firstname</label>
+                                <input type="text" class="form-control" id="nameInput" placeholder="Firstname" name="firstname" autocomplete="off" value="<%= user.firstName %>">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Lastname</label>
+                                <input type="text" class="form-control" id="nameInput" placeholder="Lastname" name="lastname" autocomplete="off" value="<%= user.lastName %>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1" class="mr-1">Password</label>
+                                <small class="text-sm text-danger" style="display: inline-block; transform: translateY(-2px);">(Enter passwords if you want to change it)</small>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" name="password" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="exampleInputPassword2">Repeat Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="" name="repassword" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-outline-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../common/js') %>
+</body>
+</html>
