@@ -20,7 +20,7 @@ export const edit = async (req, res) => {
 
 export const update = async (req, res) => {
     const { email, firstname, lastname, password, repassword } = req.body;
-    console.log(req.body)
+    
     if(!email || !firstname || !lastname){
         return ["Please fill out all the inputs"];
     }

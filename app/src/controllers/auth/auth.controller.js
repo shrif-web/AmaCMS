@@ -1,3 +1,4 @@
+
 import sequelize from "../../models/index.js"
 import User from "../../models/user.model.js"
 import bcrypt from "bcryptjs"
@@ -25,7 +26,9 @@ export const doRegister = async (req, res) => {
             role: User.roles.NORMAL,
             passwordHash
         });
-        req.session.user = user;
+        req.session.user = {
+            id: user.id,
+        };
         res.redirect("/");
     }
 };
@@ -70,7 +73,9 @@ export const doLogin = async (req, res) => {
         } else if (!bcrypt.compareSync(password, user.passwordHash)) {
             res.render('auth/login', {errors: ["Wrong Password"]});
         } else {
-            req.session.user = user;
+            req.session.user = {
+                id: user.id,
+            };
             if (user.role == User.roles.ADMIN) {
                 res.redirect("/admin");
             } else {
@@ -86,5 +91,11 @@ export const logout = async (req, res) => {
 }
 
 export const testHome = async (req, res) => {
-    res.render('auth/testHome');
+    const user = await User.findOne({
+        where: {id: req.session.user.id}
+    })
+
+    res.render('auth/testHome', {
+        currentUser: user
+    });
 }

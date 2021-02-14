@@ -1,3 +1,4 @@
+
 import express from "express"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
@@ -47,11 +48,6 @@ app.use(fileUpload({
 }))
 app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
-
-app.use(function(req, res, next) {
-    res.locals.currentUser = req.session.user;
-    next();
-});
 
 app.use('/api', apiRouter)
 app.use('/admin', adminRouter)

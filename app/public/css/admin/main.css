@@ -1,3 +1,4 @@
+
 :root{
     --x-color: #c0392b;
     --files-color: #2980b9;
@@ -5,8 +6,9 @@
     --posts-color: #d1b200;
     --packages-color: #bd1600;
     --categories-color: #16a085;
-    --z-color: #34495e;
-    --w-color: #95a5a6;
+    --y-color: #34495e;
+    --z-color: #95a5a6;
+    --comments-color: #e84393;
 }
 
 #admin_nav li.nav-item-users *{
@@ -27,4 +29,8 @@
 
 #admin_nav li.nav-item-categories *{
     color: var(--categories-color);
+}
+
+#admin_nav li.nav-item-comments *{
+    color: var(--comments-color);
 }
