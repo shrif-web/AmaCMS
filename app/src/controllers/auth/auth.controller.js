@@ -91,9 +91,9 @@ export const logout = async (req, res) => {
 }
 
 export const testHome = async (req, res) => {
-    const user = await User.findOne({
+    const user = req.session.user ? await User.findOne({
         where: {id: req.session.user.id}
-    })
+    }) : null;
 
     res.render('auth/testHome', {
         currentUser: user
