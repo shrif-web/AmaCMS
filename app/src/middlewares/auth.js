@@ -1,5 +1,13 @@
 import jwt from "jsonwebtoken";
 
+export const authenticated = (req, res, next) => {
+    if (req.session.user == undefined) {
+        return res.redirect("/login");
+    }
+
+    next();
+}
+
 export const authorize = (req, res, next) => {
     let authHeader = req.headers.authorization
 
