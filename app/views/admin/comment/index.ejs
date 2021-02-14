@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments</title>
+
+    <%- include('../common/style') %>
+
+    <style>
+        .status-label {
+            text-transform: capitalize;
+            border-radius: 4px;
+            padding: 5px 8px;
+        }
+
+        .status-pending {
+            background: #f1c40f;
+        }
+
+        .status-accepted {
+            background: #27ae60;
+            color: white;
+        }
+
+        .status-rejected {
+            background: #c0392b;
+            color: white;
+        }
+
+        .comments-table td {
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+    <%- include('../common/nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-comments fa-2x"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Comments</h4>
+            </div>
+            <div class="card-body">
+                <% if (messages.info && messages.info.length) { %>
+                    <% for(let msg of messages.info) { %>
+                        <div class="alert alert-info">
+                            <%= msg %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <% if (messages.error && messages.error.length) { %>
+                    <% for(let msg of messages.error) { %>
+                        <div class="alert alert-danger">
+                            <%= msg %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <table class="table table-bordered text-center comments-table">
+                    <tr>
+                        <th style="width: 10%;">ID</th>
+                        <th style="width: 20%">User</th>
+                        <th style="width: 20%">Post</th>
+                        <th>Content</th>
+                        <th>Status</th>
+                        <th style="width: 10%;">Operations</th>
+                    </tr>
+                    <% if (comments.length > 0) { %>
+                        <% for (comment of comments) { %>
+                            <tr>
+                                <td style="width: 10%;"><%= comment.id %></td>
+                                <td><%= comment.User.firstName + " " + comment.User.lastName %></td>
+                                <td><%= comment.Post.title %></td>
+                                <%
+                                    const lengthOfExcerpt = 20;
+                                    const excerptContent = comment.content.slice(0, lengthOfExcerpt);
+                                    let isMore = false;
+                                    if (comment.content.length > lengthOfExcerpt) {
+                                        isMore = true;
+                                    }
+                                %>
+                                <td style="text-align: justify;">
+                                    <%= excerptContent %><%= isMore ? "..." : "" %>
+                                    <% if (isMore) { %>
+                                        <a href="#" class="content-more-btn" data-content="<%= comment.content %>">(more)</a>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <span class="status-label status-<%= comment.status %>">
+                                        <%= comment.status %>
+                                    </span>
+                                </td>
+                                <td style="width: 10%;">
+                                    <% if (!(comment.status == statuses.ACCEPTED)) { %>
+                                        <a href="/admin/comment/changeStatus/<%= comment.id %>?status=<%= statuses.ACCEPTED %>" class="text-success" title="Accept"><i class="fa fa-check"></i></a>
+                                    <% } %>
+                                    <% if (!(comment.status == statuses.REJECTED)) { %>
+                                        <a href="/admin/comment/changeStatus/<%= comment.id %>?status=<%= statuses.REJECTED %>" class="text-danger" title="Reject"><i class="fa fa-times"></i></a>
+                                    <% } %>
+                                    |
+                                    <a href="/admin/comment/delete/<%= comment.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info mt-2 text-center">No Comments yet</div>
+                            </th>
+                        </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="comment-content-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Content</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-justify">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <%- include('../common/js') %>
+
+    <script>
+        $(document).ready(function() {
+            const contentModal = $("#comment-content-modal");
+            $(".content-more-btn").on('click', function(e) {
+                e.preventDefault();
+                const content = $(this).data('content');
+
+                contentModal.find(".modal-body").html(content);
+                contentModal.modal();
+            });
+        });
+    </script>
+</body>
+</html>
