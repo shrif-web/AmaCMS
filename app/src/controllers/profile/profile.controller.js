@@ -1,5 +1,6 @@
 import sequelize from "../../models/index.js"
 import User from "../../models/user.model.js"
+import bcrypt from "bcryptjs"
 
 export const index = async (req, res) => {
     const infoMessages = await req.consumeFlash('info');
