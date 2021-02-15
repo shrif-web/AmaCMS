@@ -4,8 +4,12 @@ import User from "../../models/user.model.js"
 export const index = async (req, res) => {
     const infoMessages = await req.consumeFlash('info');
 
+    const user = await User.findOne({
+        where: {id: req.session.user.id}
+    })
+
     res.render('profile/index', {
-        user: req.session.user,
+        user: user,
         messages: {
             info: infoMessages,
         },
@@ -13,8 +17,12 @@ export const index = async (req, res) => {
 };
 
 export const edit = async (req, res) => {
+    const user = await User.findOne({
+        where: {id: req.session.user.id}
+    })
+
     res.render('profile/edit', {
-        user: req.session.user
+        user: user
     });
 }
 

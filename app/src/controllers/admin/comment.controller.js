@@ -21,7 +21,7 @@ export const index = async (req, res) => {
     const errorMessages = await req.consumeFlash('error');
 
     res.render('admin/comment/index', {
-        comments: comments,
+        comments: comments.sort((a, b) => b.createdAt - a.createdAt),
         messages: {
             info: infoMessages,
             error: errorMessages,
