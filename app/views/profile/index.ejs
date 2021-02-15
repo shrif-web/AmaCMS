@@ -7,6 +7,21 @@
     <title>Profile</title>
 
     <%- include('../common/style') %>
+
+    <style>
+        span.role {
+            color: white;
+            border-radius: 4px;
+            padding: 5px 10px;;
+            text-transform: capitalize;
+        }
+        span.role-admin {
+            background: #e74c3c;
+        }
+        span.role-normal {
+            background: #3498db;
+        }
+    </style>
 </head>
     <%- include('nav') %>
 
@@ -44,7 +59,11 @@
                         <td><%= user.firstName %></td>
                         <td><%= user.lastName %></td>
                         <td><%= user.email %></td>
-                        <td><%= user.role %></td>
+                        <td>
+                            <span class="role role-<%= user.role %>">
+                                <%= user.role %>
+                            </span>
+                        </td>
                     </tr>
                 </table>
 
