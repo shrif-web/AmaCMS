@@ -7,6 +7,7 @@ import postRouter from "./post.router.js"
 import packageRouter from "./package.router.js"
 import userRouter from "./user.router.js"
 import commentRouter from "./comment.router.js"
+import socialMediaRouter from "./socialMedia.router.js"
 
 const router = express.Router()
 
@@ -17,6 +18,7 @@ router.use('/post', postRouter)
 router.use('/package', packageRouter)
 router.use('/user', userRouter)
 router.use('/comment', commentRouter)
+router.use('/social_media', socialMediaRouter)
 
 
 export default router

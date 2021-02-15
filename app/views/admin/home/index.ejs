@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>Admin Dashboard</title>
 
     <%- include('../common/style') %>
+    <style> 
+        .class-label {
+            background: #34495e;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: white;
+        }
+        .class-label:not(:last-of-type) {
+            margin-right: 1px;
+        }
+        .circle-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <%- include('../common/nav') %>
@@ -18,7 +35,55 @@
                 <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Dashboard</h4>
             </div>
             <div class="card-body">
-                Content Here
+                <h5 class="d-flex align-items-center">
+                    <i class="fal fa-link mr-2" style="font-size: 30px;"></i>
+                    Social Media
+                    <a href="/admin/social_media/create" class="btn btn-sm btn-outline-success ml-auto">
+                        <i class="fal fa-plus"></i>
+                        Create
+                    </a>
+                </h5>
+                <hr>
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Link</th>
+                        <th>Class</th>
+                        <th>Icon</th>
+                        <th>Color</th>
+                        <th>Operation</th>
+                    </tr>
+                    <% if (socialMedias.length > 0) { %>
+                        <% for (socialMedia of socialMedias) { %>
+                            <tr>
+                                <td style="width: 10%;"><%= socialMedia.id %></td>
+                                <td><%= socialMedia.name %></td>
+                                <td><%= socialMedia.link %></td>
+                                <td>
+                                    <% for(let c of socialMedia.class.split(" ")) { %>
+                                        <% c = c.trim(); %>
+                                        <span class="class-label"><%= c %></span>
+                                    <% } %>
+                                </td>
+                                <td><i class="<%= socialMedia.class %>"></i></td>
+                                <td>
+                                    <div class="circle-color" style="background: <%= socialMedia.color %>"></div>
+                                </td>
+                                <td style="width: 10%;">
+                                    <a href="/admin/social_media/delete/<%= socialMedia.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="/admin/social_media/edit/<%= socialMedia.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7">
+                                <div class="alert alert-info mt-2 text-center">No Social Media</div>
+                            </th>
+                        </tr>
+                    <% } %>
+                </table>
             </div>
         </div>
     </div>
