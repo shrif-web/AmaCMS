@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Social Media</title>
+
+    <%- include('../common/style') %>
+</head>
+<body>
+    <%- include('../common/nav') %>
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-link fa-2x"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Create Social Media</h4>
+            </div>
+            <div class="card-body">
+                <% if (locals.errors) { %>
+                    <% for (error of errors) { %>
+                        <div class="alert alert-danger">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                <% } %>
+                <form method="POST">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Name</label>
+                                <input type="text" class="form-control" id="nameInput" placeholder="" name="name" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Link</label>
+                                <input type="text" class="form-control" id="nameInput1" placeholder="" name="link" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Fontawesome Classes</label>
+                                <input type="text" class="form-control" id="nameInput2" placeholder="" name="classes" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nameInput">Color of icon</label>
+                                <input type="color" class="form-control col-2" id="nameInput3" placeholder="" name="color" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary mt-2">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../common/js') %>
+</body>
+</html>
