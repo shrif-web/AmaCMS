@@ -7,8 +7,12 @@
     <title>Register</title>
 
     <%- include('../common/style') %>
+    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
 </head>
 <body>
+    <%- include('../front/top_menu') %>
+
     <div class="container mt-5 col-12 col-md-4">
         <div class="card border-primary">
             <div class="card-header text-primary border-primary"><i class="fal fa-sign-in mr-1"></i> Register</div>
@@ -46,5 +50,11 @@
             </div>
         </div>
     </div>
+
+    <%- include('../front/footer') %>
+
+    <%- include('../common/js') %>
+
+    <script src="/js/front/topMenu.js"></script>
 </body>
 </html>

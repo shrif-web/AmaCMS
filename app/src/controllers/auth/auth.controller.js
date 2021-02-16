@@ -1,11 +1,28 @@
 
 import sequelize from "../../models/index.js"
 import User from "../../models/user.model.js"
+import SocialMedia from "../../models/socialMedia.model.js"
+import Post from "../../models/post.model.js";
+import { getWhichRouterForTopMenu } from "./../../utils.js"
 import bcrypt from "bcryptjs"
 import { errors } from "@elastic/elasticsearch";
 
 export const register = async (req, res) => {
-    res.render('auth/register');
+    const socialMedias = await SocialMedia.findAll();
+    const topPosts = await Post.findAll({
+        order: [
+            ['likes', 'DESC'],
+            ['views', 'DESC']
+        ],
+        limit: 5
+    })
+
+    res.render('auth/register', {
+        socialMedias,
+        whichRouter: getWhichRouterForTopMenu(req),
+        user: null,
+        topPosts,
+    });
 };
 
 
@@ -55,7 +72,21 @@ const registerValidationErrors = async req => {
 }
 
 export const login = async (req, res) => {
-    res.render('auth/login');
+    const socialMedias = await SocialMedia.findAll();
+    const topPosts = await Post.findAll({
+        order: [
+            ['likes', 'DESC'],
+            ['views', 'DESC']
+        ],
+        limit: 5
+    })
+
+    res.render('auth/login', {
+        socialMedias,
+        whichRouter: getWhichRouterForTopMenu(req),
+        user: null,
+        topPosts,
+    });
 }
 
 export const doLogin = async (req, res) => {

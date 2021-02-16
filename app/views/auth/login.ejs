@@ -7,9 +7,13 @@
     <title>Login</title>
 
     <%- include('../common/style') %>
+    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
 </head>
 <body>
-    <div class="container mt-5 col-12 col-md-4">
+    <%- include('../front/top_menu') %>
+
+    <div class="container mt-5 col-12 col-md-4" style="min-height: 500px;">
         <div class="card border-success">
             <div class="card-header text-success border-success"><i class="fal fa-sign-in mr-1"></i> Login</div>
             <div class="card-body">
@@ -34,5 +38,11 @@
             </div>
         </div>
     </div>
+
+    <%- include('../front/footer') %>
+
+    <%- include('../common/js') %>
+
+    <script src="/js/front/topMenu.js"></script>
 </body>
 </html>
