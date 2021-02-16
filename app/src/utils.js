@@ -7,3 +7,9 @@ export function fullUrl(req) {
         pathname: req.originalUrl
     });
 };
+
+export function getWhichRouterForTopMenu(req) {
+    return {
+        isHome: req.route.path == '/home',
+    }
+}

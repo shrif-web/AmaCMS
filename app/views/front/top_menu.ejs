@@ -1,0 +1,74 @@
+<div class="container-fluid" id="top_header_wrapper">
+    <div class="container" id="top_header">
+        <div class="row">
+            <div class="col-12 col-md-6" id="logo_header_container">
+                <img src="/images/logo.png" alt="Englosh Ocean Logo" id="header_logo">
+                <div id="header_wrapper_title">
+                    <h1>A.M.A. Dev Tutorials</h1>
+                    <h2>Tutorials for developers</h2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6" id="header_social_container">
+                <ul>
+                    <% for(let socialMedia of socialMedias) { %>
+                        <li><a href="<%= socialMedia.link %>" style="background: <%= socialMedia.color %>"><i class="<%= socialMedia.class %>"></i></a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="container_menu">
+    <div class="container" id="nav_header">
+        <nav class="nav-wrap">
+            <ul class="group" id="header_menu">
+                <li class="current_page_item" style="width: 0; overflow: hidden;">
+                    <a href=""></a>
+                </li>
+                <li class="<%= whichRouter.isHome ? 'current_page_item' : '' %>">
+                    <a href="#"">
+                        <i class="fa fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i>
+                        Contact us
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        About us
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <% if (user) { %>
+            <a href="/logout" class="btn_top_menu" id="logout_btn">
+                <i class="fa fa-sign-out-alt mr-1"></i>
+                Logout
+            </a>
+            <% if (user.role == 'admin') { %>
+                <a href="/admin" class="btn_top_menu btn btn-outline-primary">
+                    <i class="fa fa-cogs mr-1"></i>
+                    Admin Panel
+                </a>
+            <% } %>
+            <a href="/profile" class="btn_top_menu btn btn-outline-info">
+                <i class="fa fa-user-cog"></i>
+                Profile
+            </a>
+        <% } else { %>
+            <a href="/register" class="btn_top_menu" id="register_btn">
+                <i class="fa fa-user-plus mr-1"></i>
+                Register
+            </a>
+            <a href="/login" class="btn_top_menu" id="login_btn">
+                <i class="fa fa-sign-in mr-1"></i>
+                Login
+            </a>
+        <% } %>    
+    </div>
+</div>

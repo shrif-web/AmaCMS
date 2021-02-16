@@ -1,5 +1,6 @@
 import sequelize from "../../models/index.js"
 import Post from "../../models/post.model.js"
+import User from "../../models/user.model.js"
 
 export const create = async (req, res) => {
     const { title, imageUrl, content } = req.body
@@ -10,7 +11,8 @@ export const create = async (req, res) => {
         await Post.create({
             title: title,
             imageUrl: imageUrl,
-            content: content
+            content: content,
+            UserId: req.session.user.id,
         }, {
             transaction: transaction
         })        

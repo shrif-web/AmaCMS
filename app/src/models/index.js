@@ -41,4 +41,10 @@ Comment.belongsTo(Post, {
 
 Post.hasMany(Comment)
 
+Comment.belongsTo(Comment)
+Comment.hasMany(Comment)
+
+Post.belongsTo(User)
+User.hasMany(Post)
+
 export default sequelize
