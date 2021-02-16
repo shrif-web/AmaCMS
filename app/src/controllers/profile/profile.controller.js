@@ -1,12 +1,20 @@
 import sequelize from "../../models/index.js"
 import User from "../../models/user.model.js"
+import UserLikePost from "../../models/userLikePost.model.js"
+import Post from "../../models/post.model.js"
 import bcrypt from "bcryptjs"
 
 export const index = async (req, res) => {
     const infoMessages = await req.consumeFlash('info');
 
     const user = await User.findOne({
-        where: {id: req.session.user.id}
+        where: {id: req.session.user.id},
+        include: [
+            {
+                model: Post,
+                as: 'favoritePosts'
+            }
+        ]
     })
 
     res.render('profile/index', {
@@ -14,6 +22,7 @@ export const index = async (req, res) => {
         messages: {
             info: infoMessages,
         },
+        favoritePosts: user.favoritePosts,
     });
 };
 

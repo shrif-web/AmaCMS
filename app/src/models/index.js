@@ -48,7 +48,7 @@ Comment.hasMany(Comment)
 Post.belongsTo(User)
 User.hasMany(Post)
 
-User.belongsToMany(Post, {through: UserLikePost})
-Post.belongsToMany(User, {through: UserLikePost})
+User.belongsToMany(Post, {as: 'favoritePosts', through: UserLikePost})
+Post.belongsToMany(User, {as: 'usersFavorite', through: UserLikePost})
 
 export default sequelize

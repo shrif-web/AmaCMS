@@ -32,13 +32,13 @@ export const getPost = async (req, res) => {
         limit: 5
     })
     
-    post.approvedComments = post.Comments.filter(function (comment) {
-        return comment.status == Comment.statuses.ACCEPTED;
-    })
-
     if (!post) {
         return res.redirect("/");
     }
+
+    post.approvedComments = post.Comments.filter(function (comment) {
+        return comment.status == Comment.statuses.ACCEPTED;
+    })
 
     const userLiked = await UserLikePost.findOne({
         where: {

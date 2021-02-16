@@ -1,6 +1,7 @@
 <% for (let comment of post.Comments) { %>
     <% if (comment.CommentId == commentParentID) { %>
         <% if(comment.status == 'accepted' || (comment.status == 'pending' && ((user && comment.User.id == user.id) || (user && user.role == 'admin')))) { %>
+            <% didPrint = true; %>
             <div class="comment">
                 <div class="container_comment_avatar_role">
                     <div class="comment-avatar">

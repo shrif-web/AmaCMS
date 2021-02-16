@@ -40,9 +40,9 @@
     <div class="container" id="comments_container">
         <div id="post-comments" class="comments-area">
             <h3 class="comment-title"> <%= post.approvedComments.length ? post.approvedComments.length + " Comments" : "No comments for this post" %></h3>
-            <% if (post.approvedComments.length) { %>
-                <%- include('comment', {commentParentID: null}) %>
-            <% } else { %>
+            <% didPrint = false %>
+            <%- include('comment', {commentParentID: null}) %>
+            <% if (!didPrint) { %>
                 <div class="comment-list text-center">
                     <p class="alert_warning">Be the first one! Send your comment through the form below</p>
                 </div>

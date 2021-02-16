@@ -21,6 +21,23 @@
         span.role-normal {
             background: #3498db;
         }
+
+        .post-thumb-tmp {
+            box-shadow: 0px 1px 5px 0px #828282;
+            width: 130px;
+            height: 80px;
+            border-radius: 4px;
+            display: flex;
+            position: relative;
+            display: inline-block;
+        }
+        .post-thumb-tmp i {
+            font-size: 70px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
     <%- include('nav') %>
@@ -81,8 +98,27 @@
                 </nav>
 
                 <div class="tab-content pt-4" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-favorite" role="tabpanel" aria-labelledby="nav-trefavoritee">
-                        My Fav.
+                    <div class="tab-pane fade show active pl-4 pr-4" id="nav-favorite" role="tabpanel" aria-labelledby="nav-trefavoritee">
+                        <% if (favoritePosts.length) { %>
+                            <% for (let pIndex = 0 ; pIndex < favoritePosts.length ; pIndex++) { %>
+                                <% let post = favoritePosts[pIndex]; %>
+                                <div class="post-container d-flex align-items-center">
+                                    <% if (post.imageUrl) { %>
+                                        <img src="<%= post.imageUrl %>" alt="" style="width: 130px; height: 80px; border-radius: 4px;">
+                                    <% } else { %>
+                                        <div class="post-thumb-tmp">
+                                            <i class="fad fa-image"></i>
+                                        </div>
+                                    <% } %>
+                                    <a href="/post/<%= post.id %>" class="ml-4"><%= post.title %></a>
+                                </div>
+                                <% if (pIndex != favoritePosts.length - 1) { %>
+                                    <hr>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <p class="alert alert-warning">No favorite posts</p>
+                        <% } %>
                     </div>
                     <div class="tab-pane fade" id="nav-package" role="tabpanel" aria-labelledby="nav-package">
                         My Pack.
