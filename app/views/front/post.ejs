@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <%- include('../common/style') %>
+    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/post.css">
+</head>
+<body>
+    <%- include('top_menu') %>
+    
+
+    <div class="container container_white_title mt-4">
+        <h2><%= post.title %></h2>
+    </div>
+    <div class="container single_container_post" id="container_white">
+        <div class="post_meta d-flex align-items-center">
+            <span class="d-flex align-items-center"><i class="fal fa-user"></i> <span><%= post.User.firstName + " " + post.User.lastName %></span></span>
+            <span class="d-flex align-items-center"><i class="fal fa-comment"></i> <span><%= post.approvedComments.length  %></span></span>
+            <span class="d-flex align-items-center"><i class="fad fa-calendar-alt"></i> <span><%= post.createdAt.days %> <%= post.createdAt.toLocaleString([], {year: 'numeric', month: 'long', day: 'numeric'}) %></span></span>
+            <span class="d-flex align-items-center"><i class="fad fa-eye"></i> <span><%= post.views %></span></span>
+            <span class="d-flex align-items-center"><i class="fal fa-heart"></i> <span><%= post.likes %></span></span>
+        </div>
+        <div class="post_content_wrapper">
+            <img src="<%= post.imageUrl %>" alt="Post Thumbnail" class="post-image">
+            <%- post.content %>
+        </div>
+        <span class="post_like_user_wrapper">
+            Did you like this post ?
+            <i class="<%= userLiked ? "fas" : "fal" %> fa-heart" id="post_like_btn" data-pid="<%= post.id %>"></i>
+        </span>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="container" id="comments_container">
+        <div id="post-comments" class="comments-area">
+            <h3 class="comment-title"> <%= post.approvedComments.length ? post.approvedComments.length + " Comments" : "No comments for this post" %></h3>
+            <% if (post.approvedComments.length) { %>
+                <%- include('comment', {commentParentID: null}) %>
+            <% } else { %>
+                <div class="comment-list text-center">
+                    <p class="alert_warning">Be the first one! Send your comment through the form below</p>
+                </div>
+            <% } %>
+        </div>
+
+        <div id="respond" class="comment-respond">
+            <h3 id="reply-title" class="comment-reply-title">Send your comment</h3>
+            <% if (user) { %>
+                <div class="replyToCon">
+                    <p class="alert alert-secondary reply-to" style="display: none;">
+                        In reply to : <span class="font-weight-bold" id="reply-to-name">Arman Zarei</span>
+                        <i class="fa fa-times ml-2 text-danger" style="cursor: pointer;" id="cansel-reply"></i>
+                    </p>
+                </div>
+                <form id="commentform" class="col-10 col-md-10 col-lg-8 offset-1 offset-md-1 offset-lg-2">
+                    <div class="comment_textarea_wrapper">
+                        <textarea placeholder="Your comment ..." id="comment" class="col-12" name="comment" rows="8" maxlength="65525" required="required"></textarea>
+                    </div>
+                    <div class="form-submit col-12">
+                        <input name="submit" type="submit" id="submit" class="col-12" value="Submit"> 
+                        <input type="hidden" name="postId" id="comment_post_ID" value="<%= post.id %>">
+                        <input type="hidden" name="replyTo" id="comment_parent">
+                    </div>
+                </form>
+            <% } else { %>
+                <p class="alert alert-info login-required">
+                    You need to <a href="/login">login</a> or <a href="/register">register</a> first
+                </p>
+            <% } %>
+        </div>
+    </div>
+    
+    <%- include('footer') %>
+
+    <%- include('../common/js') %>
+
+    <script src="/js/front/topMenu.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const $commentParentInput = $("#comment_parent");
+            const $replyToContainer = $(".reply-to");
+            const $replyToName = $("#reply-to-name");
+            
+            $("#cansel-reply").on('click', function (e) {
+                $commentParentInput.val("");
+                $replyToContainer.fadeOut();
+            })
+
+            $(".comment-reply").on('click', function (e) {
+                e.preventDefault();
+                $replyToName.html($(this).data("fullname"))
+                $commentParentInput.val($(this).data("commentid"));
+                $replyToContainer.fadeIn();
+            })
+            
+            $("#commentform").on('submit', function (e) {
+                const $this = $(this);
+                e.preventDefault();
+
+                $.ajax({
+                    url: "/api/comment/create",
+                    method: "POST",
+                    data: {
+                        postId: $this.find("#comment_post_ID").val(),
+                        content: $this.find("#comment").val(),
+                        replyTo: $this.find("#comment_parent").val(),
+                    },
+                    success: function(response) {
+                        swal("Success", "Comment Successfully submitted", "success")
+                            .then((value) => {
+                                location.reload();
+                            });
+                    },
+                    error: function(error) {
+                        swal("Error", error.responseJSON.message, "error");
+                    }
+                })
+            })
+
+            $(".admin-btn-action").on('click', function (e) {
+                e.preventDefault();
+                const $this = $(this)
+
+                $.ajax({
+                    url: "/api/comment/status",
+                    method: "POST",
+                    data: {
+                        commentId: $this.data("commentid"),
+                        status: $this.data("status"),
+                    },
+                    success: function(response) {
+                        swal("Success", "Status successfully changes", "success")
+                            .then((value) => {
+                                location.reload();
+                            });
+                    },
+                    error: function(error) {
+                        swal("Error", error.responseJSON.message, "error");
+                    }
+                })
+            })
+
+            $("#post_like_btn").on('click', function (e) {
+                const $this = $(this);
+                const pid = $this.data("pid");
+
+                $.ajax({
+                    url: "/api/post/like",
+                    method: "POST",
+                    data: {
+                        post: pid
+                    },
+                    success: function(response) {
+                        if (response.like) {
+                            $this.removeClass("fal").addClass("fas")
+                        } else {
+                            $this.removeClass("fas").addClass("fal")
+                        }
+                    },
+                    error: function(error) {
+                        swal("Error", error.responseJSON.message, "error");
+                    }
+                })
+            })
+        });
+    </script>
+</body>
+</html>

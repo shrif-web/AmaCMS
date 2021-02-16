@@ -8,6 +8,16 @@ export const authenticated = (req, res, next) => {
     next();
 }
 
+export const authenticatedApi = (req, res, next) => {
+    if (req.session.user == undefined) {
+        return res.status("401").json({
+            message: "You're not authenticated"
+        });
+    }
+
+    next();
+}
+
 export const authorize = (req, res, next) => {
     let authHeader = req.headers.authorization
 

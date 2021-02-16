@@ -16,7 +16,11 @@ const Post = sequelize.define('Post',
         views: {
             type: Types.INTEGER,
             defaultValue: 0
-        }
+        },
+        likes:{
+            type: Types.INTEGER,
+            defaultValue: 0
+        },
     }, {
     instanceMethods: {
     }

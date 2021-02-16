@@ -6,6 +6,7 @@ import fileUpload from "express-fileupload"
 import apiRouter from "./routers/api/api.router.js"
 import adminRouter from "./routers/admin/admin.router.js"
 import authRouter from "./routers/auth/auth.router.js"
+import frontRouter from "./routers/front/front.router.js"
 import { authenticated } from "./middlewares/auth.js"
 import profileRouter from "./routers/profile/profile.router.js"
 import { notFound } from "./controllers/default.controller.js"
@@ -53,6 +54,7 @@ app.use('/api', apiRouter)
 app.use('/admin', adminRouter)
 app.use('/', authRouter)
 app.use('/profile', authenticated, profileRouter)
+app.use('/', frontRouter)
 
 app.all("*", notFound);
 app.listen(port, hostname, () => {

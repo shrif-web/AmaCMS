@@ -1,0 +1,35 @@
+<% for (let comment of post.Comments) { %>
+    <% if (comment.CommentId == commentParentID) { %>
+        <% if(comment.status == 'accepted' || (comment.status == 'pending' && ((user && comment.User.id == user.id) || (user && user.role == 'admin')))) { %>
+            <div class="comment">
+                <div class="container_comment_avatar_role">
+                    <div class="comment-avatar">
+                        <img alt="" src="/images/avatar.png" srcset="http://0.gravatar.com/avatar/feee02e2b880ad601fe7ff7947b7776c?s=180&amp;d=mm&amp;r=g 2x" class="avatar avatar-90 photo" height="90" width="90">
+                    </div>
+                    <span class="role role_<%= comment.User.role %>"><%= comment.User.role %></span>
+                </div>
+                <div class="comment_text_wrapper">
+                    <span class="comment_author role_<%= comment.User.role %>_color"><%= comment.User.firstName + " " + comment.User.lastName %></span>
+                    <% if (comment.status == 'pending') { %>
+                        <span class="bg-warning comment-awaiting-moderation">
+                            Waiting for approval
+                        </span>
+                        <% if (user && user.role == 'admin') { %>
+                            <div class="action-btn-group float-left" style="margin: 7px 8px;">
+                                <a href="" class="admin-btn-action text-success" title="Accept" data-status="accepted" data-commentid="<%= comment.id %>"><i class="fa fa-check"></i></a>
+                                <a href="" class="admin-btn-action text-danger" title="Reject" data-status="rejected" data-commentid="<%= comment.id %>"><i class="fa fa-times"></i></a>
+                            </div>
+                        <% } %>
+                    <% } %>
+                    <div class="comment-content">
+                        <p style="margin-top: 15px;"><%= comment.content %></p>
+                    </div>
+                    <a class="comment-reply" data-commentid="<%= comment.id %>" data-fullname="<%= comment.User.firstName + " " + comment.User.lastName %>">
+                        <span class="reply"><i class="fas fa-reply"></i> Reply</span>
+                    </a>
+                </div>
+                <%- include('comment', {commentParentID: comment.id}) %>
+            </div>
+        <% } %>
+    <% } %>
+<% } %>
