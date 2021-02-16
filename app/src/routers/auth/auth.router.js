@@ -8,6 +8,6 @@ router.route('/register').post(doRegister)
 router.route('/login').get(login)
 router.route('/login').post(doLogin)
 router.route('/logout').get(logout)
-router.route('/').get(testHome)
+// router.route('/').get(testHome)
 
 export default router
