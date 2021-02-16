@@ -8,13 +8,14 @@
                     Home
                 </a>
             </li>
-            <!-- TODO : Check if user is admin -->
-            <li class="nav-item position-relative">
-                <a href="/" class="nav-link text-info">
-                    <i class="fad fa-cogs"></i>
-                    Admin Panel
-                </a>
-            </li>
+            <% if (user.role == 'admin') { %>
+                <li class="nav-item position-relative">
+                    <a href="/admin" class="nav-link text-info">
+                        <i class="fad fa-cogs"></i>
+                        Admin Panel
+                    </a>
+                </li>
+            <% } %>
         </ul>
     </div>
 </nav>
