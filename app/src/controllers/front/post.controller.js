@@ -39,6 +39,9 @@ export const getPost = async (req, res) => {
         return res.redirect("/");
     }
 
+    post.views += 1;
+    await post.save();
+
     const socialMedias = await SocialMedia.findAll();
     const user = await getCurrentUser(req);
 
