@@ -32,7 +32,7 @@
         </div>
         <span class="post_like_user_wrapper">
             Did you like this post ?
-            <i class="fal fa-heart" id="post_like_btn" data-pid="<%= post.id %>"></i>
+            <i class="<%= userLiked ? "fas" : "fal" %> fa-heart" id="post_like_btn" data-pid="<%= post.id %>"></i>
         </span>
         <div class="clearfix"></div>
     </div>
@@ -140,6 +140,29 @@
                             .then((value) => {
                                 location.reload();
                             });
+                    },
+                    error: function(error) {
+                        swal("Error", error.responseJSON.message, "error");
+                    }
+                })
+            })
+
+            $("#post_like_btn").on('click', function (e) {
+                const $this = $(this);
+                const pid = $this.data("pid");
+
+                $.ajax({
+                    url: "/api/post/like",
+                    method: "POST",
+                    data: {
+                        post: pid
+                    },
+                    success: function(response) {
+                        if (response.like) {
+                            $this.removeClass("fal").addClass("fas")
+                        } else {
+                            $this.removeClass("fas").addClass("fal")
+                        }
                     },
                     error: function(error) {
                         swal("Error", error.responseJSON.message, "error");

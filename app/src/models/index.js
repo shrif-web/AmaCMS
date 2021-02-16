@@ -5,6 +5,7 @@ import Package from "./package.model.js"
 import Tag from "./tag.model.js"
 import Comment from "./comment.model.js"
 import User from "./user.model.js"
+import UserLikePost from "./userLikePost.model.js"
 import sequelize from "../services/mysql.js"
 
 Category.belongsTo(Category, {
@@ -46,5 +47,8 @@ Comment.hasMany(Comment)
 
 Post.belongsTo(User)
 User.hasMany(Post)
+
+User.belongsToMany(Post, {through: UserLikePost})
+Post.belongsToMany(User, {through: UserLikePost})
 
 export default sequelize
