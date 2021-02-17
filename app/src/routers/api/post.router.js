@@ -5,13 +5,13 @@ import { authorize, authenticatedApi } from "../../middlewares/auth.js"
 const router = express.Router()
 
 router.route('/')
-    .post(create)
+    .post(authorize, create)
     .get(getAll)
 
 router.route('/:id')
     .get(get)
-    .put(update)
-    .delete(deleteById)
+    .put(authorize, update)
+    .delete(authorize, deleteById)
 
 router.route("/like")
     .post(authenticatedApi, likePost)

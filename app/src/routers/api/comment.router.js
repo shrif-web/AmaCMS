@@ -5,6 +5,6 @@ import { create, changeStatus } from "../../controllers/api/comment.controller.j
 const router = express.Router()
 
 router.route('/create').post(create)
-router.route('/status').post(changeStatus) // TODO : Authorized middleware (only for admin)
+router.route('/status').post(authorize, changeStatus)
 
 export default router
