@@ -63,7 +63,11 @@
                                     <div class="header_package">
                                         <img src="<%= package.imageUrl %>" alt="">
                                         <h4><%= package.title %></h4>
-                                        <span class="package_badge">FREE</span>
+                                        <% if (package.price && package.price > 0) { %>
+                                            <span class="package_badge not_free_package">$ <%= package.price %></span>
+                                        <% } else { %>
+                                            <span class="package_badge">FREE</span>
+                                        <% } %>
                                     </div>
                 
                                     <%
