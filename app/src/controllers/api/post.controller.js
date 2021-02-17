@@ -204,3 +204,19 @@ export const likePost = async (req, res) => {
         like: true
     })
 }
+
+export const morePosts = async (req, res) => {
+    const { page } = req.query
+    const size = 3; // TODO : Read from parameters or somewhere ...
+
+    let posts = await Post.findAll({
+        offset: page*size,
+        include: [{
+            model: User
+        }]
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 1000)); // modeling delay of server
+
+    res.render('front/morePosts', {posts})
+}

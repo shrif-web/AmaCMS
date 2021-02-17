@@ -68,7 +68,7 @@
                 
                                     <%
                                         const lengthOfExcerpt = 260;
-                                        const excerptContent = package.rawContent.slice(0, lengthOfExcerpt);
+                                        const excerptContent = package.getRawContent().slice(0, lengthOfExcerpt);
                                     %>
                                     <p><%= excerptContent %> ...</p>
                 
@@ -90,23 +90,71 @@
     <div class="container partition_with_title">
         <h3 class="title_partition font-weight-bold">Posts</h3>
         <section id="posts_section">
-            <div class="row">
-                <?php get_template_part('loops/post-loop'); ?>
-            </div>
+            <% if (posts.length) { %>
+                <div class="row">
+                    <% for (let post of posts) { %>
+                        <%- include('singlePostContainer', {post}) %>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info mt-3 text-center"> No posts </div>
+            <% } %>
         </section>
         <div class="row justify-content-center">
-            <div class="col-12">
-                <a href="#" id="load_more_posts" class="load_more_contents" data-page="1">
-                    <img src="<?php echo get_template_directory_uri() ?>/images/load_more.gif" alt="Load more posts" id="load_more_posts_gif">
-                    <span id="load_more_posts_txt">مطالب بیشتر</span>
-                </a>
-            </div>
+            <% if (posts.length) { %>
+                <div class="col-12">
+                    <a href="#" id="load_more_posts" class="load_more_contents" data-page="1">
+                        <img src="/images/load_more.gif" alt="Load more posts" id="load_more_posts_gif">
+                        <span id="load_more_posts_txt">More posts</span>
+                    </a>
+                </div>
+            <% } %>
         </div>
     </div>
     
     <%- include('footer') %>
 
     <%- include('../common/js') %>
+
+    <script>
+        $(document).ready(function () {
+            $("#load_more_posts").on('click',function (event) {
+                event.preventDefault();
+                const $this = $(this);
+
+                if ($this.hasClass("no_more_contents")) {
+                    return;
+                }
+
+                const $page = parseInt($this.data('page'));
+                $("#load_more_posts_txt").hide();
+                $("#load_more_posts_gif").show();
+                $.ajax({
+                    url : "/api/post/more",
+                    type : 'GET',
+                    data:{
+                        page : $page
+                    },
+                    success:function (response) {
+                        if(response){
+                            $("#posts_section > .row").append(response);
+                            $this.data('page',$page + 1);
+                            $("#load_more_posts_txt").show();
+                            $("#load_more_posts_gif").hide();
+                        } else{
+                            $("#load_more_posts_txt").show().text('No more posts');
+                            $("#load_more_posts_gif").hide();
+                            $this.addClass("no_more_contents")
+                        }
+                    },
+                    error:function () {
+                        $("#load_more_posts_txt").show();
+                        $("#load_more_posts_gif").hide();
+                    }
+                });
+            });
+        });
+    </script>
 
     <script src="/js/front/topMenu.js"></script>
 </body>
