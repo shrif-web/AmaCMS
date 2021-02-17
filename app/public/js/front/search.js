@@ -1,9 +1,37 @@
 const loading = () => {
-    // TODO: Arman
+    $("#loader-wrapper").fadeIn();
 }
 
-const showSearchResults = results => {
-    // TODO: Arman
+const createSinglePost = post => {
+    console.log(post.title)
+    let p = $("#clonable-post").clone(true);
+    p.removeAttr('id');
+
+
+    p.find(".post-thumb").attr("src", post.imageUrl);
+    p.find(".result-post-link").attr("href", `/post/${post.id}`)
+    p.find(".post_author_name").html(post.user.firstName + " " + post.user.lastName)
+    p.find(".number_of_like_post").html(post.likes)
+    p.find(".number_of_view_post").html(post.views)
+    p.find(".post_title").html(post.title)
+    const createdAt = (new Date(post.createdAt)).toLocaleString([], {year: 'numeric', month: 'long', day: 'numeric'});
+    p.find(".post_release_date_time").html(createdAt)
+    p.find(".post_content").html(post.content.join(" "))
+
+    p.removeClass("d-none")
+    $("#searchResultContainer").append(p);
+} 
+
+const initModal = query => {
+    $("#searchModal .modal-title").html("Search result for <span class='font-weight-bold'>" + query + "</span>")
+    $("#no-result-alert").addClass("d-none").removeClass("d-block");
+    $("#searchResultContainer").html("");
+}
+
+const showSearchResults = (query, results) => {
+    $("#loader-wrapper").fadeOut();
+    initModal(query);
+    $("#searchModal").modal();
     /*  results: array of {
             id,
             title,
@@ -16,11 +44,20 @@ const showSearchResults = results => {
                 firstName,
                 lastName,
             },
-        } */
+        } */    
+    if (results.length) {
+        for (let post of results) {
+            createSinglePost(post);
+        }
+    } else {
+        $("#no-result-alert").removeClass("d-none").addClass("d-block");
+    }
+    
 }
 
 const error = response => {
-    // TODO: Arman
+    swal("Error", "Error while fetching from elasticsearch", "error");
+    console.log(response)
 }
 
 const sleep = time => {
@@ -61,11 +98,11 @@ const search = () => {
 
     $.get(`/api/search?q=${query}`)
         .done(response => {
-            sleep(1000) // just for dev
+            sleep(0) // just for dev
                 .then(() => {
                     const results = prepareResults(response)
                     console.log(results);
-                    showSearchResults(results)
+                    showSearchResults(query, results)
                 })
         }).fail(response => error(response))
 }
