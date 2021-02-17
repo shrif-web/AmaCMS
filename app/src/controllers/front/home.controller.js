@@ -2,11 +2,39 @@ import SocialMedia from "../../models/socialMedia.model.js"
 import Post from "../../models/post.model.js";
 import User from "../../models/user.model.js"
 import Comment from "../../models/comment.model.js"
-import UserLikePost from "../../models/userLikePost.model.js"
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
 import Package from "../../models/package.model.js";
-import redisClient from "../../services/redis.js"
+import asyncRedis from 'async-redis'
+
+const redisClient = asyncRedis.createClient('redis://cache')
+
+const HOME_STATISTICS_KEY = "HOME_STATISTICS_KEY"
+
+const homeStatistics = async function() {
+    var stats = null
+    
+    const statsString = await redisClient.get(HOME_STATISTICS_KEY)
+
+    if (!statsString) {
+        stats = {
+            usersCount: await User.count(),
+            postsCount: await Post.count(),
+            packagesCount: await Package.count(),
+            commentsCount: await Comment.count(),
+        }
+
+        console.log("----- Caching Home Statistics -----");
+        
+        await redisClient.set(HOME_STATISTICS_KEY, JSON.stringify(stats))
+    } else {
+        stats = JSON.parse(statsString)
+        console.log("----- Reading Statistics From Cache -----");
+    }
+
+    console.log(stats)
+    return stats;
+}
 
 export const index = async (req, res) => {
     const topPosts = await Post.findAll({
@@ -20,7 +48,7 @@ export const index = async (req, res) => {
     const socialMedias = await SocialMedia.findAll();
     const user = await getCurrentUser(req);
 
-    const statistics = await redisClient.homeStatistics()
+    const statistics = await homeStatistics()
 
     let favoritePackages = await Package.findAll({
         order: [
