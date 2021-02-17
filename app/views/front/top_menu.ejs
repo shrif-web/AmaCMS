@@ -4,8 +4,8 @@
             <div class="col-12 col-md-6" id="logo_header_container">
                 <img src="/images/logo.png" alt="Englosh Ocean Logo" id="header_logo">
                 <div id="header_wrapper_title">
-                    <h1>A.M.A. Dev Tutorials</h1>
-                    <h2>Tutorials for developers</h2>
+                    <h1><%= settings.title %></h1>
+                    <h2><%= settings.description %></h2>
                 </div>
             </div>
             <div class="col-12 col-md-6" id="header_social_container">
@@ -28,7 +28,7 @@
                     </li>
                 <% } %>
                 <li class="<%= whichRouter.isHome ? 'current_page_item' : '' %>">
-                    <a href="/"">
+                    <a href="/">
                         <i class="fa fa-home"></i>
                         Home
                     </a>

@@ -6,6 +6,7 @@ import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
 import Package from "../../models/package.model.js";
 import asyncRedis from 'async-redis'
+import Setting from "../../models/setting.model.js";
 
 const redisClient = asyncRedis.createClient('redis://cache')
 
@@ -80,5 +81,6 @@ export const index = async (req, res) => {
         favoritePackages,
         packages,
         posts,
+        settings: await Setting.getSettingsObject(),
     });
 }

@@ -1,6 +1,13 @@
 import sequelize from "./models/index.js"
 import User from "./models/user.model.js"
 import bcrypt from "bcryptjs"
+import fs from 'fs'
+import path from "path"
+import Setting from "./models/setting.model.js"
+
+
+const __dirname = path.resolve()
+
 
 const createSuperUser = async () => {
     const adminCount = await User.count({
@@ -30,7 +37,24 @@ Number.prototype.priceFormat = function() {
     return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
+const createDefaultSettings = async () => {
+    const defaultSettingsFile = fs.readFileSync(path.join(__dirname, 'default.settings.json'))
+    const defaultSettings = JSON.parse(defaultSettingsFile)
+
+    for (const key in defaultSettings) {
+        const exists = await Setting.count({ where: { key: key} } )
+        if (!exists) {
+            await Setting.create({
+                key: key,
+                value: defaultSettings[key]
+            })
+            console.log(`Creating ${key} setting by default`);
+        }
+    }
+}
+
 export default async () => {
     await sequelize.sync()
     await createSuperUser()
+    await createDefaultSettings()
 }

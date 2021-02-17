@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A.M.A Dev CMS</title>
+    <title><%= settings.title %></title>
 
     <%- include('../common/style') %>
     
@@ -23,8 +23,8 @@
     <div class="container-fluid" id="hero_header_container">
         <div id="cover_hero_header">
             <div class="container">
-                <h2 class="hero_title">Tutorial packages for all levels</h2>
-                <h3 class="hero_title_desc">Daily posts for developers</h3>
+                <h2 class="hero_title"><%= settings.desc_line1 %></h2>
+                <h3 class="hero_title_desc"><%= settings.desc_line2 %></h3>
                 <div class="search-wrapper">
                     <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
                     <button onclick="search()" id="search_btn" name=""><i class="fas fa-search"></i></button>
