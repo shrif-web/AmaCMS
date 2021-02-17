@@ -37,7 +37,6 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     store: new RedisStore({
         client: redisClient,
-        ttl: 260,
     }),
     resave: false,
     saveUninitialized: false,
