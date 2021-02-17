@@ -16,7 +16,7 @@ const createSinglePost = post => {
     p.find(".post_title").html(post.title)
     const createdAt = (new Date(post.createdAt)).toLocaleString([], {year: 'numeric', month: 'long', day: 'numeric'});
     p.find(".post_release_date_time").html(createdAt)
-    p.find(".post_content").html(post.content.join(" "))
+    p.find(".post_content").html(post.content)
 
     p.removeClass("d-none")
     $("#searchResultContainer").append(p);
