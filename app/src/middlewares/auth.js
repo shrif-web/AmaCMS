@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "./../models/user.model.js"
 
 export const authenticated = (req, res, next) => {
     if (req.session.user == undefined) {
@@ -26,49 +27,15 @@ export const guestOnly = (req, res, next) => {
     next();
 }
 
-export const authorize = (req, res, next) => {
-    let authHeader = req.headers.authorization
-
-    if (!authHeader) {
-        return res.status(403).json({
-            message: "No authorization token provided"
-        })
+export const authorize = async (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
     }
 
-    let accessToken = authHeader.split(' ')[1]
+    const user = await User.findByPk(req.session.user.id)
+    if (user.role != User.roles.ADMIN) {
+        return res.redirect("/")
+    }
 
-    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
-        if (err) {
-            return res.status(401).json({
-                message: "Invalid authorization token"
-            })
-        }
-        req.user = await User.find({
-            email: user.email
-        })
-        next()
-    })
-}
-
-export const postPrivilege = (req, res, next) => {
-    const postId = req.params.id
-
-    // Post.findById(postId)
-    //     .populate("user")
-    //     .then(data => {
-    //         if (!data)
-    //             return res.status(404).json({ message: `Not found Post with id = ${postId}`});
-    //         if (!data.user.id == req.user.id) {
-    //             return res.status(403).json({
-    //                 message: "You can't access someone else's post",
-    //             })
-    //         }
-    //          next()
-            
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message: `Error retrieving Post with id = ${postId}`
-    //         });
-    //     });
+    next();
 }

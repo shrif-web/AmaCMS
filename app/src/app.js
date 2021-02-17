@@ -7,7 +7,7 @@ import apiRouter from "./routers/api/api.router.js"
 import adminRouter from "./routers/admin/admin.router.js"
 import authRouter from "./routers/auth/auth.router.js"
 import frontRouter from "./routers/front/front.router.js"
-import { authenticated } from "./middlewares/auth.js"
+import { authenticated, authorize } from "./middlewares/auth.js"
 import profileRouter from "./routers/profile/profile.router.js"
 import { notFound } from "./controllers/default.controller.js"
 import sequelize from "./models/index.js"
@@ -51,7 +51,7 @@ app.set('view engine', 'ejs');
 app.disable('view cache'); // for development
 
 app.use('/api', apiRouter)
-app.use('/admin', adminRouter)
+app.use('/admin', authorize, adminRouter)
 app.use('/', authRouter)
 app.use('/profile', authenticated, profileRouter)
 app.use('/', frontRouter)
