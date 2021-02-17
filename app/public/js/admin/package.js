@@ -5,6 +5,7 @@ const submit = (method, url) => {
         description: tinymce.get('text-editor').getContent(),
         fileUrl: $('#file-url').val(),
         price: Number($('#package-price').val()),
+        coverUrl: $('#cover-url').val(),
     }
 
     console.log(the_package)

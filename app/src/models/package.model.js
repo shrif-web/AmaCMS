@@ -10,6 +10,7 @@ const Package = sequelize.define('Package',
         },
         title: Types.STRING,
         imageUrl: Types.STRING,
+        coverUrl: Types.STRING,
         description: Types.TEXT,
         view: {
             type: Types.INTEGER,

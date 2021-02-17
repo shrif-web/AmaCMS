@@ -9,12 +9,95 @@
     <%- include('../common/style') %>
     <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
     <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
-    <link rel="stylesheet" type="text/css" href="/css/front/post.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/index.css">
 </head>
 <body>
     <%- include('top_menu') %>
     
+    <!-- Hero Header -->
+    <div class="container-fluid" id="hero_header_container">
+        <div id="cover_hero_header">
+            <div class="container">
+                <h2 class="hero_title">Tutorial packages for all levels</h2>
+                <h3 class="hero_title_desc">Daily posts for developers</h3>
+                <div class="search-wrapper">
+                    <form action="" method="get">
+                        <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
+                        <button id="search_btn" name=""><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="row site_stat">
+                    <div class="col-3">
+                        <i class="fas fa-user-graduate"></i>
+                        <span><span class="student_number"><%= statistics.usersCount %></span> Users</span>
+                    </div>
+                    <div class="col-3">
+                        <i class="fas fa-play-circle"></i>
+                        <span><span class="student_number"><%= statistics.packagesCount %></span> Tutorial packages</span>
+                    </div>
+                    <div class="col-3">
+                        <i class="fas fa-book"></i>
+                        <span><span class="student_number"><%= statistics.postsCount %></span> Posts</span>
+                    </div>
+                    <div class="col-3">
+                        <i class="fas fa-comments"></i>
+                        <span><span class="student_number"><%= statistics.commentsCount %></span> Comments</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="container partition_with_title">
+        <h3 class="title_partition font-weight-bold">Most favorite Packages</h3>
+        <div class="wrapper">
+            <ul class="stage">
+                <% for (let package of packages) { %>
+                    <li class="package_popular">
+                        <div class="movie">
+                            <div class="poster">
+                                <img src="<%= package.coverUrl %>" alt="">
+                            </div>
+                            <div class="info">
+                                <div class="header_package">
+                                    <img src="<%= package.imageUrl %>" alt="">
+                                    <h4><%= package.title %></h4>
+                                    <span class="package_badge">FREE</span>
+                                </div>
+            
+                                <%
+                                    const lengthOfExcerpt = 260;
+                                    const excerptContent = package.rawContent.slice(0, lengthOfExcerpt);
+                                %>
+                                <p><%= excerptContent %> ...</p>
+            
+                                <a href="/package/<%= package.id %>" class="btn btn-sm btn-outline-info read_more_package">Go to package</a>
+                            </div>
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="container partition_with_title">
+        <h3 class="title_partition font-weight-bold">Posts</h3>
+        <section id="posts_section">
+            <div class="row">
+                <?php get_template_part('loops/post-loop'); ?>
+            </div>
+        </section>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <a href="#" id="load_more_posts" class="load_more_contents" data-page="1">
+                    <img src="<?php echo get_template_directory_uri() ?>/images/load_more.gif" alt="Load more posts" id="load_more_posts_gif">
+                    <span id="load_more_posts_txt">مطالب بیشتر</span>
+                </a>
+            </div>
+        </div>
+    </div>
     
     <%- include('footer') %>
 

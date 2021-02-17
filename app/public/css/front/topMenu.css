@@ -1,3 +1,8 @@
+body {
+    background: #f7f7f7;
+}
+
+
 div#top_header_wrapper {
     background-image: linear-gradient(#d6d6d6, #ffffff);
 }

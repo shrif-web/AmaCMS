@@ -41,7 +41,10 @@
                         <input id="image-url" class="form-control col m-1" type="text" placeholder="Package Image">
                         <button class="btn btn-primary m-1" data-toggle="modal"
                             data-target="#upload-image-modal">Upload Image</button>
-                        <input id="file-url" class="form-control col m-1" type="text" placeholder="Package File">
+                        <input id="cover-url" class="form-control col m-1" type="text" placeholder="Cover Image">
+                        <button class="btn btn-primary m-1" data-toggle="modal"
+                            data-target="#upload-cover-modal">Upload File</button>
+                            <input id="file-url" class="form-control col m-1" type="text" placeholder="Package File">
                         <button class="btn btn-primary m-1" data-toggle="modal"
                             data-target="#upload-file-modal">Upload File</button>
                     </div>
@@ -52,7 +55,7 @@
             </div>
         </div>
 
-        <% for (type of ['image', 'file']) { %> 
+        <% for (type of ['image', 'file', 'cover']) { %> 
             <!-- Upload <%= type %> Modal -->
             <div class="modal fade" id="upload-<%= type %>-modal" tabindex="-1" role="dialog" aria-labelledby="upload-<%= type %>-modal"
                 aria-hidden="true">
@@ -81,6 +84,7 @@
                 $(document).ready(() => {
                     $('#package-title').val('<%= the_package.title %>')
                     $('#image-url').val('<%= the_package.imageUrl %>')
+                    $('#cover-url').val('<%= the_package.coverUrl %>')
                     $('#file-url').val('<%= the_package.fileUrl %>')
                     $('#package-price').val('<%= the_package.price %>')
                 })
