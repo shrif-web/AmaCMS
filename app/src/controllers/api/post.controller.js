@@ -69,7 +69,7 @@ export const deleteById = async (req, res) => {
 
 export const update = async (req, res) => {
     const id = req.params.id
-    const { title, imageUrl, content } = req.body
+    const { title, imageUrl, content, CategoryId } = req.body
     const post = await Post.findOne({
         where: {
             id: id
@@ -89,6 +89,7 @@ export const update = async (req, res) => {
         post.title = title === undefined ? post.title : title
         post.imageUrl = imageUrl === undefined ? post.imageUrl : imageUrl
         post.content = content === undefined ? post.content : content
+        post.CategoryId = CategoryId === undefined ? post.CategoryId : CategoryId
 
         await post.save({
             transaction: transaction

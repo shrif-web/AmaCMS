@@ -70,15 +70,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <%- include('../common/js') %>
         <script src="/js/admin/editor.js"></script>
+        <script src="/js/admin/dropdowntree.js"></script>
+        <%- include('../category/dropdowntree') %> 
+        <script src="/js/admin/post.js"></script>
         <script>
             $(document).ready(() => {
                 $('#post-title').val('<%= post.title %>')
                 $('#image-url').val('<%= post.imageUrl %>')
+                const postCategory = JSON.parse('<%- JSON.stringify(postCategory) %>')
+                if (postCategory) {
+                    $('#category-select').Title(postCategory.name)
+                }
             })
         </script>
-        <script src="/js/admin/dropdowntree.js"></script>
-        <%- include('../category/dropdowntree') %> 
-        <script src="/js/admin/post.js"></script>
             
 </body>
 

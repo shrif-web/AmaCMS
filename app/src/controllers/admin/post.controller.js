@@ -70,16 +70,25 @@ export const create = async (req, res) => {
         },
         categories: tree,
         categoryIdByName: categoryIdByName,
+        postCategory: null
     });
 }
 
 export const edit = async (req, res) => {
+    const tree = await createTree()
+    const categoryIdByName = getCategoryIdByName(tree)
     const id = req.params.id
     const post = await Post.findOne({
         where: {
             id: id
         }
     })
+    const postCategory = post.CategoryId != null ? await Category.findOne({
+        where: {
+            id: post.CategoryId
+        }
+    }) : null
+
     res.render('admin/post/post-editor', {
         title: "Edit Post",
         post: post,
@@ -87,7 +96,10 @@ export const edit = async (req, res) => {
             method: 'PUT',
             url: `/api/post/${id}`,
             text: 'Update'
-        }
+        },
+        categories: tree,
+        categoryIdByName: categoryIdByName,
+        postCategory: postCategory
     });
 }
 
