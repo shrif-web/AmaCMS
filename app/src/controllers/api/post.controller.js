@@ -4,7 +4,7 @@ import User from "../../models/user.model.js"
 import UserLikePost from "../../models/userLikePost.model.js"
 
 export const create = async (req, res) => {
-    const { title, imageUrl, content } = req.body
+    const { title, imageUrl, content, CategoryId } = req.body
 
     const transaction = await sequelize.transaction()
 
@@ -13,6 +13,7 @@ export const create = async (req, res) => {
             title: title,
             imageUrl: imageUrl,
             content: content,
+            CategoryId: CategoryId,
             UserId: req.session.user.id,
         }, {
             transaction: transaction

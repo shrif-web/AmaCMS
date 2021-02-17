@@ -2,7 +2,8 @@ const submit = (method, url) => {
     const post = {
         title: $('#post-title').val(),
         imageUrl: $('#image-url').val(),
-        content: tinymce.get('text-editor').getContent()
+        content: tinymce.get('text-editor').getContent(),
+        CategoryId: idByName[$("#category-select").Title()]
     }
 
     console.log(post)
