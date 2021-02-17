@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,219 +8,229 @@
     <title>A.M.A Dev CMS</title>
 
     <%- include('../common/style') %>
-    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
-    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
-    <link rel="stylesheet" type="text/css" href="/css/front/index.css">
+        <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+        <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
+        <link rel="stylesheet" type="text/css" href="/css/front/index.css">
+        <link rel="stylesheet" text="text/css" href="/css/common/spinner.css">
 </head>
+
 <body>
     <%- include('top_menu') %>
-    
-    <!-- Hero Header -->
-    <div class="container-fluid" id="hero_header_container">
-        <div id="cover_hero_header">
-            <div class="container">
-                <h2 class="hero_title">Tutorial packages for all levels</h2>
-                <h3 class="hero_title_desc">Daily posts for developers</h3>
-                <div class="search-wrapper">
-                    <form action="" method="get">
-                        <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
-                        <button id="search_btn" name=""><i class="fas fa-search"></i></button>
-                    </form>
-                </div>
-                <div class="row site_stat">
-                    <div class="col-3">
-                        <i class="fas fa-user-graduate"></i>
-                        <span><span class="student_number"><%= statistics.usersCount %></span> Users</span>
+
+        <!-- Hero Header -->
+        <div class="container-fluid" id="hero_header_container">
+            <div id="cover_hero_header">
+                <div class="container">
+                    <h2 class="hero_title">Tutorial packages for all levels</h2>
+                    <h3 class="hero_title_desc">Daily posts for developers</h3>
+                    <div class="search-wrapper">
+                        <form action="" method="get">
+                            <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
+                            <button id="search_btn" name=""><i class="fas fa-search"></i></button>
+                        </form>
                     </div>
-                    <div class="col-3">
-                        <i class="fas fa-play-circle"></i>
-                        <span><span class="student_number"><%= statistics.packagesCount %></span> Tutorial packages</span>
-                    </div>
-                    <div class="col-3">
-                        <i class="fas fa-book"></i>
-                        <span><span class="student_number"><%= statistics.postsCount %></span> Posts</span>
-                    </div>
-                    <div class="col-3">
-                        <i class="fas fa-comments"></i>
-                        <span><span class="student_number"><%= statistics.commentsCount %></span> Comments</span>
+                    <div class="row site_stat">
+                        <div class="col-3">
+                            <i class="fas fa-user-graduate"></i>
+                            <span><span class="student_number"><%= statistics.usersCount %></span> Users</span>
+                        </div>
+                        <div class="col-3">
+                            <i class="fas fa-play-circle"></i>
+                            <span><span class="student_number"><%= statistics.packagesCount %></span> Tutorial packages</span>
+                        </div>
+                        <div class="col-3">
+                            <i class="fas fa-book"></i>
+                            <span><span class="student_number"><%= statistics.postsCount %></span> Posts</span>
+                        </div>
+                        <div class="col-3">
+                            <i class="fas fa-comments"></i>
+                            <span><span class="student_number"><%= statistics.commentsCount %></span> Comments</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container partition_with_title">
-        <h3 class="title_partition font-weight-bold">Most favorite Packages</h3>
-        <div class="wrapper">
-            <% if (favoritePackages.length) { %>
-                <ul class="stage">
-                    <% for (let package of favoritePackages) { %>
-                        <li class="package_popular">
-                            <div class="movie">
-                                <div class="poster">
-                                    <img src="<%= package.coverUrl %>" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="header_package">
-                                        <img src="<%= package.imageUrl %>" alt="">
-                                        <h4><%= package.title %></h4>
-                                        <% if (package.price && package.price > 0) { %>
-                                            <span class="package_badge not_free_package">$ <%= package.price.priceFormat() %></span>
-                                        <% } else { %>
-                                            <span class="package_badge">FREE</span>
-                                        <% } %>
+        <div class="container partition_with_title">
+            <h3 class="title_partition font-weight-bold">Most favorite Packages</h3>
+            <div class="wrapper">
+                <% if (favoritePackages.length) { %>
+                    <ul class="stage">
+                        <% for (let package of favoritePackages) { %>
+                            <li class="package_popular">
+                                <div class="movie">
+                                    <div class="poster">
+                                        <img src="<%= package.coverUrl %>" alt="">
                                     </div>
-                
-                                    <%
+                                    <div class="info">
+                                        <div class="header_package">
+                                            <img src="<%= package.imageUrl %>" alt="">
+                                            <h4>
+                                                <%= package.title %>
+                                            </h4>
+                                            <% if (package.price && package.price > 0) { %>
+                                                <span class="package_badge not_free_package">$ <%= package.price.priceFormat() %></span>
+                                                <% } else { %>
+                                                    <span class="package_badge">FREE</span>
+                                                    <% } %>
+                                        </div>
+
+                                        <%
                                         const lengthOfExcerpt = 260;
                                         const excerptContent = package.getRawContent().slice(0, lengthOfExcerpt);
                                     %>
-                                    <p><%= excerptContent %> ...</p>
-                
-                                    <a href="/package/<%= package.id %>" class="btn btn-sm btn-outline-info read_more_package">Go to package</a>
+                                            <p>
+                                                <%= excerptContent %> ...</p>
+
+                                            <a href="/package/<%= package.id %>" class="btn btn-sm btn-outline-info read_more_package">Go to package</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    <% } %>
-                </ul>
-            <% } else { %>
-                <div class="alert alert-info mt-5">No Packages yet</div>
-            <% } %>
-            
+                            </li>
+                            <% } %>
+                    </ul>
+                    <% } else { %>
+                        <div class="alert alert-info mt-5">No Packages yet</div>
+                        <% } %>
+
+            </div>
+            <div class="clearfix"></div>
         </div>
+
         <div class="clearfix"></div>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="container partition_with_title">
-        <h3 class="title_partition font-weight-bold">Posts</h3>
-        <section id="posts_section">
-            <% if (posts.length) { %>
-                <div class="row">
-                    <% for (let post of posts) { %>
-                        <%- include('singlePostContainer', {post}) %>
-                    <% } %>
-                </div>
-            <% } else { %>
-                <div class="alert alert-info mt-3 text-center"> No posts </div>
-            <% } %>
-        </section>
-        <div class="row justify-content-center">
-            <% if (posts.length) { %>
-                <div class="col-12">
-                    <a href="#" id="load_more_posts" class="load_more_contents" data-page="1">
-                        <img src="/images/load_more.gif" alt="Load more posts" id="load_more_posts_gif">
-                        <span id="load_more_posts_txt">More posts</span>
-                    </a>
-                </div>
-            <% } %>
-        </div>
-    </div>
-
-    <div class="container partition_with_title">
-        <h3 class="title_partition font-weight-bold">Packages</h3>
-        <section id="package_section">
-            <% if (packages.length) { %>
-                <div class="row">
-                    <%- include('morePackages.ejs', packages) %>
-                </div>
-            <% } else { %>
-                <div class="alert alert-info mt-3 text-center"> No packages </div>
-            <% } %>
-            <% if (packages.length) { %>
-                <div class="row justify-content-center">
+        <div class="container partition_with_title">
+            <h3 class="title_partition font-weight-bold">Posts</h3>
+            <section id="posts_section">
+                <% if (posts.length) { %>
+                    <div class="row">
+                        <% for (let post of posts) { %>
+                            <%- include('singlePostContainer', {post}) %>
+                                <% } %>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-info mt-3 text-center"> No posts </div>
+                        <% } %>
+            </section>
+            <div class="row justify-content-center">
+                <% if (posts.length) { %>
                     <div class="col-12">
-                        <a href="#" id="load_more_packages" class="load_more_contents" data-page="1">
-                            <img src="/images/load_more.gif" alt="Load more posts" id="load_more_packages_gif">
-                            <span id="load_more_packages_txt">More packages</span>
+                        <a href="#" id="load_more_posts" class="load_more_contents" data-page="1">
+                            <img src="/images/load_more.gif" alt="Load more posts" id="load_more_posts_gif">
+                            <span id="load_more_posts_txt">More posts</span>
                         </a>
                     </div>
-                </div>
-            <% } %>
-        </section>
-    </div>
-    
-    <%- include('footer') %>
+                    <% } %>
+            </div>
+        </div>
 
-    <%- include('../common/js') %>
+        <div class="container partition_with_title">
+            <h3 class="title_partition font-weight-bold">Packages</h3>
+            <section id="package_section">
+                <% if (packages.length) { %>
+                    <div class="row">
+                        <%- include('morePackages.ejs', packages) %>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-info mt-3 text-center"> No packages </div>
+                        <% } %>
+                            <% if (packages.length) { %>
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <a href="#" id="load_more_packages" class="load_more_contents" data-page="1">
+                                            <img src="/images/load_more.gif" alt="Load more posts" id="load_more_packages_gif">
+                                            <span id="load_more_packages_txt">More packages</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <% } %>
+            </section>
+        </div>
 
-    <script>
-        $(document).ready(function () {
-            $("#load_more_posts").on('click',function (event) {
-                event.preventDefault();
-                const $this = $(this);
+        <div id="loader-wrapper" style="opacity: 0; display: none;">
+            <div id="loader"></div>
+        </div>
 
-                if ($this.hasClass("no_more_contents")) {
-                    return;
-                }
+        <%- include('footer') %>
 
-                const $page = parseInt($this.data('page'));
-                $("#load_more_posts_txt").hide();
-                $("#load_more_posts_gif").show();
-                $.ajax({
-                    url : "/api/post/more",
-                    type : 'GET',
-                    data:{
-                        page : $page
-                    },
-                    success:function (response) {
-                        if(response){
-                            $("#posts_section > .row").append(response);
-                            $this.data('page',$page + 1);
-                            $("#load_more_posts_txt").show();
-                            $("#load_more_posts_gif").hide();
-                        } else{
-                            $("#load_more_posts_txt").show().text('No more posts');
-                            $("#load_more_posts_gif").hide();
-                            $this.addClass("no_more_contents")
-                        }
-                    },
-                    error:function () {
-                        $("#load_more_posts_txt").show();
-                        $("#load_more_posts_gif").hide();
-                    }
-                });
-            });
+            <%- include('../common/js') %>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#load_more_posts").on('click', function(event) {
+                            event.preventDefault();
+                            const $this = $(this);
+
+                            if ($this.hasClass("no_more_contents")) {
+                                return;
+                            }
+
+                            const $page = parseInt($this.data('page'));
+                            $("#load_more_posts_txt").hide();
+                            $("#load_more_posts_gif").show();
+                            $.ajax({
+                                url: "/api/post/more",
+                                type: 'GET',
+                                data: {
+                                    page: $page
+                                },
+                                success: function(response) {
+                                    if (response) {
+                                        $("#posts_section > .row").append(response);
+                                        $this.data('page', $page + 1);
+                                        $("#load_more_posts_txt").show();
+                                        $("#load_more_posts_gif").hide();
+                                    } else {
+                                        $("#load_more_posts_txt").show().text('No more posts');
+                                        $("#load_more_posts_gif").hide();
+                                        $this.addClass("no_more_contents")
+                                    }
+                                },
+                                error: function() {
+                                    $("#load_more_posts_txt").show();
+                                    $("#load_more_posts_gif").hide();
+                                }
+                            });
+                        });
 
 
-            $("#load_more_packages").on('click',function (event) {
-                event.preventDefault();
-                const $this = $(this);
+                        $("#load_more_packages").on('click', function(event) {
+                            event.preventDefault();
+                            const $this = $(this);
 
-                if ($this.hasClass("no_more_contents")) {
-                    return;
-                }
+                            if ($this.hasClass("no_more_contents")) {
+                                return;
+                            }
 
-                const $page = parseInt($this.data('page'));
-                $("#load_more_packages_txt").hide();
-                $("#load_more_packages_gif").show();
-                $.ajax({
-                    url : "/api/package/more",
-                    type : 'GET',
-                    data:{
-                        page : $page
-                    },
-                    success:function (response) {
-                        if(response){
-                            $("#package_section > .row:first-of-type").append(response);
-                            $this.data('page',$page + 1);
-                            $("#load_more_packages_txt").show();
-                            $("#load_more_packages_gif").hide();
-                        } else{
-                            $("#load_more_packages_txt").show().text('No more packages');
-                            $("#load_more_packages_gif").hide();
-                            $this.addClass("no_more_contents")
-                        }
-                    },
-                    error:function () {
-                        $("#load_more_posts_txt").show();
-                        $("#load_more_posts_gif").hide();
-                    }
-                });
-            });
-        });
-    </script>
+                            const $page = parseInt($this.data('page'));
+                            $("#load_more_packages_txt").hide();
+                            $("#load_more_packages_gif").show();
+                            $.ajax({
+                                url: "/api/package/more",
+                                type: 'GET',
+                                data: {
+                                    page: $page
+                                },
+                                success: function(response) {
+                                    if (response) {
+                                        $("#package_section > .row:first-of-type").append(response);
+                                        $this.data('page', $page + 1);
+                                        $("#load_more_packages_txt").show();
+                                        $("#load_more_packages_gif").hide();
+                                    } else {
+                                        $("#load_more_packages_txt").show().text('No more packages');
+                                        $("#load_more_packages_gif").hide();
+                                        $this.addClass("no_more_contents")
+                                    }
+                                },
+                                error: function() {
+                                    $("#load_more_posts_txt").show();
+                                    $("#load_more_posts_gif").hide();
+                                }
+                            });
+                        });
+                    });
+                </script>
 
-    <script src="/js/front/topMenu.js"></script>
+                <script src="/js/front/topMenu.js"></script>
 </body>
+
 </html>
