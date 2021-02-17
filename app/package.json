@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@elastic/elasticsearch": "^7.10.0",
+    "async-redis": "^1.1.7",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^5.1.0",
     "cookie-parser": "^1.4.5",
