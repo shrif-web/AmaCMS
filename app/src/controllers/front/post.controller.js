@@ -91,12 +91,25 @@ export const getPost = async (req, res) => {
     const socialMedias = await SocialMedia.findAll();
     const user = await getCurrentUser(req);
 
+    let viewsStat = await PostViewLog.findAll({
+        where: {
+            PostId: post.id,
+        },
+        attributes: ['date', 'views'],
+        limit: 7,
+        order: [['date', 'ASC']]
+    })
+
     res.render("front/post", {
         socialMedias,
         user,
         whichRouter: getWhichRouterForTopMenu(req),
         post,
         topPosts,
-        userLiked
+        userLiked,
+        viewsStat: {
+            key: viewsStat.map(r => r.date),
+            val: viewsStat.map(r => r.views),
+        }
     });
 }
