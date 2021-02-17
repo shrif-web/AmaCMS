@@ -18,6 +18,14 @@ export const authenticatedApi = (req, res, next) => {
     next();
 }
 
+export const guestOnly = (req, res, next) => {
+    if (req.session.user) {
+        return res.redirect("/");
+    }
+
+    next();
+}
+
 export const authorize = (req, res, next) => {
     let authHeader = req.headers.authorization
 
