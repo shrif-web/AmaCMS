@@ -23,6 +23,8 @@ services:
       - PAYMENT_MERCHANT
       - PAYMENT_MOCK
       - SESSION_SECRET
+      - SU_EMAIL
+      - SU_PASSWORD
   cache:
     container_name: amacms-redis
     image: redis:latest
