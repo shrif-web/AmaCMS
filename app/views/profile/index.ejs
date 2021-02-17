@@ -120,8 +120,32 @@
                             <p class="alert alert-warning">No favorite posts</p>
                         <% } %>
                     </div>
-                    <div class="tab-pane fade" id="nav-package" role="tabpanel" aria-labelledby="nav-package">
-                        My Pack.
+                    <div class="tab-pane fade pl-4 pr-4" id="nav-package" role="tabpanel" aria-labelledby="nav-package">
+                        <% if (packages.length) { %>
+                            <% for (let pIndex = 0 ; pIndex < packages.length ; pIndex++) { %>
+                                <% let package = packages[pIndex]; %>
+                                <div class="post-container d-flex align-items-center">
+                                    <% if (package.imageUrl) { %>
+                                        <img src="<%= package.imageUrl %>" alt="" style="width: 130px; height: 80px; border-radius: 4px;">
+                                    <% } else { %>
+                                        <div class="post-thumb-tmp">
+                                            <i class="fad fa-image"></i>
+                                        </div>
+                                    <% } %>
+                                    <a href="/post/<%= package.id %>" class="ml-4"><%= package.title %></a>
+                                    <a href="<%= package.fileUrl %>" class="btn btn-outline-info d-flex align-items-center ml-3 btn-sm" style="width: 115px;" id="downloadPackage" data-pid="<%= package.id %>">
+                                        <i class="fal fa-download mr-2"></i>
+                                        |
+                                        <span class="ml-2">Download</span>
+                                    </a>
+                                </div>
+                                <% if (pIndex != package.length - 1) { %>
+                                    <hr>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <p class="alert alert-warning">No Packages</p>
+                        <% } %>
                     </div>
                 </div>
             </div>

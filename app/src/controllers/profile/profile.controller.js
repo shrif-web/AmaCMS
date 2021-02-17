@@ -2,7 +2,9 @@ import sequelize from "../../models/index.js"
 import User from "../../models/user.model.js"
 import UserLikePost from "../../models/userLikePost.model.js"
 import Post from "../../models/post.model.js"
+import PaymentLog from "../../models/paymentLog.model.js"
 import bcrypt from "bcryptjs"
+import Package from "../../models/package.model.js"
 
 export const index = async (req, res) => {
     const infoMessages = await req.consumeFlash('info');
@@ -13,6 +15,10 @@ export const index = async (req, res) => {
             {
                 model: Post,
                 as: 'favoritePosts'
+            },
+            {
+                model: Package,
+                as: 'userPackages'
             }
         ]
     })
@@ -23,6 +29,7 @@ export const index = async (req, res) => {
             info: infoMessages,
         },
         favoritePosts: user.favoritePosts,
+        packages: user.userPackages,
     });
 };
 

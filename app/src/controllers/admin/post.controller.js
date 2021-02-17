@@ -52,7 +52,13 @@ export const edit = async (req, res) => {
 }
 
 export const index = async (req, res) => {
-    const posts = await Post.findAll();
+    const posts = await Post.findAll({
+        include: [
+            {
+                model: Category,
+            }
+        ]
+    });
 
     res.render('admin/post/index', {
         title: "Posts",
