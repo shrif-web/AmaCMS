@@ -6,7 +6,6 @@ import UserLikePost from "../../models/userLikePost.model.js"
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
 import Package from "../../models/package.model.js";
-import { htmlToText } from 'html-to-text'
 
 export const index = async (req, res) => {
     const topPosts = await Post.findAll({
@@ -34,22 +33,15 @@ export const index = async (req, res) => {
         ],
         limit: 3
     }) // TODO : We can order by number of sells 
-    packages = packages.map(function (p) {
-        p.rawContent = htmlToText(p.description, {
-            tags: {
-                a: {
-                    options: {
-                        ignoreHref: true
-                    }
-                },
-                img: {
-                    format: 'skip'
-                }
-            }
-        })
 
-        return p;
-    });
+    let posts = await Post.findAll({
+        limit: 3, // TODO : Read from parameters or somewhere ...
+        include: [
+            {
+                model: User
+            }
+        ]
+    })
 
     res.render("front/index", {
         socialMedias,
@@ -57,6 +49,7 @@ export const index = async (req, res) => {
         whichRouter: getWhichRouterForTopMenu(req),
         topPosts,
         statistics,
-        packages
+        packages,
+        posts,
     });
 }
