@@ -30,15 +30,15 @@
             <%- package.description %>
         </div>
         <div class="m-auto d-flex align-items-center justify-content-center">
-            <% if (isBoughtByUser) { %>
-                <div class="btn btn-outline-info d-flex align-items-center" style="width: 230px;" id="downloadPackage">
+            <% if (isBoughtByUser || package.price == 0) { %>
+                <div class="btn btn-outline-info d-flex align-items-center" style="width: 230px;" id="downloadPackage" data-pid="<%= package.id %>">
                     <i class="fal fa-download mr-2"></i>
                     |
                     <span class="ml-2">Download this package</span>
                 </div>
             <% } else { %>
                 <span class="text-success mr-3"><i class="fa fa-dollar-sign"></i> <%= package.price.priceFormat() %></span>
-                <div class="btn btn-outline-success d-flex align-items-center" style="width: 190px;" id="buyPackage">
+                <div class="btn btn-outline-success d-flex align-items-center" style="width: 190px;" id="buyPackage" data-pid="<%= package.id %>">
                     <i class="fal fa-shopping-cart mr-2"></i>
                     |
                     <span class="ml-2">Buy this package</span>
@@ -53,5 +53,34 @@
     <%- include('../../common/js') %>
 
     <script src="/js/front/topMenu.js"></script>
+
+    <% if (messages.success.length) { %>
+        <script>
+            swal("Success", '<%- messages.success[0] %>', "success")
+        </script>
+    <% } else if (messages.error.length) { %>
+        <script>
+            swal("Error", '<%- messages.error[0] %>', "error")
+        </script>
+    <% } %>
+
+    <script>
+        $(document).ready(function () {
+            $("#buyPackage").on('click', function (e) {
+                const $this = $(this)
+                const packageId = $this.data("pid");
+                $.ajax({
+                    url: `/api/package/${packageId}/buy`,
+                    method: "GET",
+                    success: function(response) {
+                        window.location = response.redirect;
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                })
+            })
+        });
+    </script>
 </body>
 </html>

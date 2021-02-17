@@ -50,6 +50,10 @@ export const getPackage = async (req, res) => {
         whichRouter: getWhichRouterForTopMenu(req),
         package: packgeObj,
         topPosts,
-        isBoughtByUser
+        isBoughtByUser,
+        messages: {
+            error: await req.consumeFlash('error'),
+            success: await req.consumeFlash('success')
+        }
     });
 }

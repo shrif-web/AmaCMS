@@ -165,26 +165,26 @@ export const verifyPayment = async (req, res) => {
                     }),
                     await transaction.commit()
 
-                    return res.status(200).json({
-                        'refId': response.RefID
-                    })
+                    await req.flash('success', `Package (${the_package.title}) successfully added to your packages list`);
+
+                    return res.redirect("/package/" + id)
                 } catch (error) {
                     console.log(error)
                     await transaction.rollback()
-                    return res.status(500).json({
-                        message: `Internal Server Error: ${error}`
-                    })        
+
+                    await req.flash('error', `Internal Server Error: ${error}`);
+                    
+                    return res.redirect("/package/" + id)
                 }
             }
-    
-            return res.status(400).json({
-                message: "An error occured",
-                code: response.status
-            })
+
+            await req.flash('error', `An error occured`);
+                    
+            return res.redirect("/package/" + id)
         })
     } else {
-        res.status(400).json({
-            message: 'FAILED|CANCELLED'
-        })
+        await req.flash('error', `There was an error in payment`);
+                    
+        return res.redirect("/package/" + id)
     }
 }
