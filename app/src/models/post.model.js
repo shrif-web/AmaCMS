@@ -39,6 +39,23 @@ const htmlToTextOptions = {
     }
 }
 
+const option = {
+    tags: {
+        a: {
+            options: {
+                ignoreHref: true
+            }
+        },
+        img: {
+            format: 'skip'
+        }
+    }
+}
+
+Post.prototype.getRawContent = function() {
+    return htmlToText(this.content, option)
+}
+
 Post.afterCreate(async (post, options) => {
     const plainContent = htmlToText(post.content, htmlToTextOptions)
     await elastic.create({
