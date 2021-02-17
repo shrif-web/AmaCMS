@@ -80,6 +80,10 @@
                     }
                 })
             })
+
+            $("#downloadPackage").on('click', function (e) {
+                window.location = '<%= package.fileUrl %>';
+            })
         });
     </script>
 </body>
