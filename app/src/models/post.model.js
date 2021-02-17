@@ -2,6 +2,7 @@ import Types from "sequelize";
 import elastic from "../services/elastic.js"
 import sequelize from "../services/mysql.js"
 import { htmlToText } from 'html-to-text'
+import User from "./user.model.js";
 
 const Post = sequelize.define('Post',
     {
@@ -58,6 +59,11 @@ Post.prototype.getRawContent = function() {
 
 Post.afterCreate(async (post, options) => {
     const plainContent = htmlToText(post.content, htmlToTextOptions)
+    const user = await User.findOne({
+        where: {
+            id: post.UserId
+        }
+    })
     await elastic.create({
         id: String(post.id),
         index: 'posts',
@@ -67,12 +73,22 @@ Post.afterCreate(async (post, options) => {
             content: plainContent,
             views: post.views,
             createdAt: post.createdAt,
+            likes: post.likes,
+            user: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+            },
         }
     })
 })
 
 Post.afterUpdate(async (post, options) => {
     const plainContent = htmlToText(post.content, htmlToTextOptions)
+    const user = await User.findOne({
+        where: {
+            id: post.UserId
+        }
+    })
     await elastic.update({
         id: String(post.id),
         index: 'posts',
@@ -82,7 +98,12 @@ Post.afterUpdate(async (post, options) => {
                 imageUrl: post.imageUrl,
                 content: plainContent,
                 views: post.views,
-                createdAt: post.createdAt,    
+                createdAt: post.createdAt,
+                likes: post.likes,
+                user: {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                },   
             }
         }
     })
