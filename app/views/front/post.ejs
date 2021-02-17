@@ -23,6 +23,7 @@
             <span class="d-flex align-items-center"><i class="fal fa-user"></i> <span><%= post.User.firstName + " " + post.User.lastName %></span></span>
             <span class="d-flex align-items-center"><i class="fal fa-comment"></i> <span><%= post.approvedComments.length  %></span></span>
             <span class="d-flex align-items-center"><i class="fad fa-calendar-alt"></i> <span><%= post.createdAt.days %> <%= post.createdAt.toLocaleString([], {year: 'numeric', month: 'long', day: 'numeric'}) %></span></span>
+            <span class="d-flex align-items-center"><i class="fad fa-layer-group"></i> <span><%= post.Category ? post.Category.name : "No category" %></span></span>
             <span class="d-flex align-items-center"><i class="fad fa-eye"></i> <span><%= post.views %></span></span>
             <span class="d-flex align-items-center"><i class="fal fa-heart"></i> <span><%= post.likes %></span></span>
         </div>

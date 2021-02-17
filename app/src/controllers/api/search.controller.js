@@ -8,7 +8,7 @@ export const search = async (req, res) => {
             query: {
                 multi_match: {
                     query: query,
-                    fuzziness: 2,
+                    fuzziness: 1,
                     fields: [
                         'title',
                         'content'
@@ -18,7 +18,7 @@ export const search = async (req, res) => {
             highlight: {
                 fields: {
                     content: {
-                        number_of_fragments: 4
+                        number_of_fragments: 2
                     }
                 }
             }

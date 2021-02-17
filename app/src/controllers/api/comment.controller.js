@@ -1,5 +1,5 @@
 
-import sequelize from "../../models/index.js"
+import sanitizer from 'sanitizer'
 import Comment from "../../models/comment.model.js"
 import User from "../../models/user.model.js"
 
@@ -33,7 +33,7 @@ export const create = async (req, res) => {
     
     const comment = await Comment.create({
         PostId: postId,
-        content: content,
+        content: sanitizer.escape(content),
         status: status,
         UserId: user.id,
         CommentId: replyToComment ? replyToComment.id : null,

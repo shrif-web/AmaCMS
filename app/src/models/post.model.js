@@ -26,19 +26,6 @@ const Post = sequelize.define('Post',
     }
 });
 
-const htmlToTextOptions = {
-    tags: {
-        a: {
-            options: {
-                ignoreHref: true
-            }
-        },
-        img: {
-            format: 'skip'
-        }
-    }
-}
-
 const option = {
     tags: {
         a: {
@@ -57,42 +44,15 @@ Post.prototype.getRawContent = function() {
 }
 
 Post.afterCreate(async (post, options) => {
-    const plainContent = htmlToText(post.content, htmlToTextOptions)
-    await elastic.create({
-        id: String(post.id),
-        index: 'posts',
-        body: {
-            title: post.title,
-            imageUrl: post.imageUrl,
-            content: plainContent,
-            views: post.views,
-            createdAt: post.createdAt,
-        }
-    })
+    await elastic.createPost(post)
 })
 
 Post.afterUpdate(async (post, options) => {
-    const plainContent = htmlToText(post.content, htmlToTextOptions)
-    await elastic.update({
-        id: String(post.id),
-        index: 'posts',
-        body: {
-            doc: {
-                title: post.title,
-                imageUrl: post.imageUrl,
-                content: plainContent,
-                views: post.views,
-                createdAt: post.createdAt,    
-            }
-        }
-    })
+    await elastic.updatePost(post)
 })
 
 Post.afterDestroy(async (post, options) => {
-    await elastic.delete({
-        id: String(post.id),
-        index: 'posts',
-    })
+    await elastic.deletePost(post)
 })
 
 export default Post

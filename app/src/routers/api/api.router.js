@@ -7,6 +7,7 @@ import searchRouter from "./search.router.js"
 import authRouter from "./auth.router.js"
 import uploadRouter from "./upload.router.js"
 import commentRouter from "./comment.router.js"
+import elasticRouter from "./elastic.router.js"
 import { authenticated } from "./../../middlewares/auth.js"
 
 const router = express.Router()
@@ -18,5 +19,6 @@ router.use('/search', searchRouter)
 router.use('/auth', authRouter)
 router.use('/upload', uploadRouter)
 router.use('/comment', authenticated, commentRouter)
+router.use('/elastic', elasticRouter)
 
 export default router

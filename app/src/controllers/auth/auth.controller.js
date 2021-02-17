@@ -1,11 +1,11 @@
 
-import sequelize from "../../models/index.js"
+import sanitizer from 'sanitizer'
 import User from "../../models/user.model.js"
 import SocialMedia from "../../models/socialMedia.model.js"
 import Post from "../../models/post.model.js";
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import bcrypt from "bcryptjs"
-import { errors } from "@elastic/elasticsearch";
+
 
 export const register = async (req, res) => {
     const socialMedias = await SocialMedia.findAll();
@@ -38,8 +38,8 @@ export const doRegister = async (req, res) => {
 
         const user = await User.create({
             email,
-            firstName: firstname,
-            lastName: lastname,
+            firstName: sanitizer.escape(firstname),
+            lastName: sanitizer.escape(lastname),
             role: User.roles.NORMAL,
             passwordHash
         });
