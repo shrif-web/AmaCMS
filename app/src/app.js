@@ -1,4 +1,3 @@
-
 import express from "express"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
@@ -13,9 +12,9 @@ import { notFound } from "./controllers/default.controller.js"
 import path from "path"
 import session from "express-session"
 import { flash } from "express-flash-message"
-import redis from 'redis'
 import ConnectRedis from 'connect-redis'
 import startup from './startup.js'
+import redisClient from "./services/redis.js"
 
 
 await startup()
@@ -31,13 +30,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
 const RedisStore = ConnectRedis(session)
-const redisClient = redis.createClient('redis://cache')
 app.use(session({
     secret: process.env.SESSION_SECRET,
     store: new RedisStore({
         client: redisClient,
-        ttl: 260,
     }),
     resave: false,
     saveUninitialized: false,
