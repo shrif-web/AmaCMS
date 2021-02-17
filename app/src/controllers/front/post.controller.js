@@ -6,6 +6,8 @@ import Category from "../../models/category.model.js"
 import UserLikePost from "../../models/userLikePost.model.js"
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
+import sequelize from "../../models/index.js";
+import PostViewLog from "../../models/postViewLog.model.js";
 
 export const getPost = async (req, res) => {
     const post = await Post.findOne({
@@ -50,8 +52,38 @@ export const getPost = async (req, res) => {
         }
     }) ? true : false
 
-    post.views += 1;
-    await post.save();
+    const transaction = await sequelize.transaction()
+    try {
+        post.views += 1;
+        await post.save({
+            transaction: transaction
+        });
+
+        const now = new Date()
+
+        let viewLog = await PostViewLog.findOne({
+            where: {
+                PostId: post.id,
+                date: now,
+            }
+        })
+
+        if (!viewLog) {
+            viewLog = await PostViewLog.create({
+                PostId: post.id,
+            })
+        }
+
+        viewLog.views += 1
+        await viewLog.save({
+            transaction: transaction
+        })
+        
+        transaction.commit()
+    } catch (error) {
+        transaction.rollback()
+        console.log(error)
+    }
 
     const socialMedias = await SocialMedia.findAll();
     const user = await getCurrentUser(req);
