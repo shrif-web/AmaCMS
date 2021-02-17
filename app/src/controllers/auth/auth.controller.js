@@ -1,5 +1,4 @@
 
-import sanitizer from 'sanitizer'
 import User from "../../models/user.model.js"
 import SocialMedia from "../../models/socialMedia.model.js"
 import Post from "../../models/post.model.js";
@@ -38,8 +37,8 @@ export const doRegister = async (req, res) => {
 
         const user = await User.create({
             email,
-            firstName: sanitizer.escape(firstname),
-            lastName: sanitizer.escape(lastname),
+            firstName: firstname,
+            lastName: lastname,
             role: User.roles.NORMAL,
             passwordHash
         });
