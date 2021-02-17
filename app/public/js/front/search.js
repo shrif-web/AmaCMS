@@ -5,6 +5,7 @@ const loading = () => {
 const showSearchResults = results => {
     // TODO: Arman
     /*  results: array of {
+            id,
             title,
             imageUrl, 
             content,
@@ -27,9 +28,14 @@ const sleep = time => {
 }
 
 const prepareResults = response => {
+    const results = []
+    for (const result of response.hits.hits) {
 
+        results.push({
+
+        })
+    }
 }
-
 
 const search = () => {
     const query = $('#search_input').val()
