@@ -8,6 +8,7 @@ import authRouter from "./auth.router.js"
 import uploadRouter from "./upload.router.js"
 import commentRouter from "./comment.router.js"
 import elasticRouter from "./elastic.router.js"
+import settingRouter from "./setting.router.js"
 import { authenticated } from "./../../middlewares/auth.js"
 
 const router = express.Router()
@@ -20,5 +21,6 @@ router.use('/auth', authRouter)
 router.use('/upload', uploadRouter)
 router.use('/comment', authenticated, commentRouter)
 router.use('/elastic', elasticRouter)
+router.use('/setting', settingRouter)
 
 export default router

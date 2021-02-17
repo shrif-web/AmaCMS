@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <%- include('../common/style') %>
+
+</head>
+<body>
+    <%- include('../common/nav') %>
+
+    <div class="container mt-5">
+        <% for (const key in settings) { %> 
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><%= key %></span>
+                </div>
+                <input id="<%= key %>-value" type="text" class="form-control" placeholder="<%= key %>" aria-label="<%= key %>" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button onclick="update('<%= key %>')" class="btn btn-outline-success">Update</button>
+                </div>
+            </div>
+        <% } %> 
+    </div>
+    
+    <%- include('../common/js') %>
+    <script defer>
+        const settings = JSON.parse(`<%- JSON.stringify(settings) %>`)
+        for (const key in settings) {
+            $(`#${key}-value`).val(settings[key])
+        }
+
+        const update = key => {
+            const setting = {
+                key: key,
+                value: $(`#${key}-value`).val(),
+            }
+            $.ajax({
+                url: '/api/setting',
+                method: 'PUT',
+                data: JSON.stringify(setting),
+                contentType: 'application/json'
+            }).done(response => window.location.reload())
+            .fail(response => alert(response.error))
+        }
+    </script>
+</body>
+</html>

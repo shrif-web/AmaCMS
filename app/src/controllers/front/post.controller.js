@@ -8,6 +8,7 @@ import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
 import sequelize from "../../models/index.js";
 import PostViewLog from "../../models/postViewLog.model.js";
+import Setting from "../../models/setting.model.js";
 
 export const getPost = async (req, res) => {
     const post = await Post.findOne({
@@ -110,6 +111,7 @@ export const getPost = async (req, res) => {
         viewsStat: {
             key: viewsStat.map(r => r.date),
             val: viewsStat.map(r => r.views),
-        }
+        },
+        settings: await Setting.getSettingsObject(),
     });
 }
