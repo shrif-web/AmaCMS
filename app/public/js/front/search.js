@@ -98,7 +98,7 @@ const search = () => {
 
     $.get(`/api/search?q=${query}`)
         .done(response => {
-            sleep(0) // just for dev
+            sleep(2000) // just for dev
                 .then(() => {
                     const results = prepareResults(response)
                     console.log(results);
