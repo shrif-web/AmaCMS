@@ -2,6 +2,7 @@ import SocialMedia from "../../models/socialMedia.model.js"
 import Post from "../../models/post.model.js";
 import User from "../../models/user.model.js"
 import Comment from "../../models/comment.model.js"
+import Category from "../../models/category.model.js"
 import UserLikePost from "../../models/userLikePost.model.js"
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
@@ -20,7 +21,9 @@ export const getPost = async (req, res) => {
                 include: [{
                     model: User
                 }]
-            },
+            }, {
+                model: Category
+            }
         ]
     })
 
