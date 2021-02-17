@@ -51,32 +51,37 @@
     <div class="container partition_with_title">
         <h3 class="title_partition font-weight-bold">Most favorite Packages</h3>
         <div class="wrapper">
-            <ul class="stage">
-                <% for (let package of packages) { %>
-                    <li class="package_popular">
-                        <div class="movie">
-                            <div class="poster">
-                                <img src="<%= package.coverUrl %>" alt="">
-                            </div>
-                            <div class="info">
-                                <div class="header_package">
-                                    <img src="<%= package.imageUrl %>" alt="">
-                                    <h4><%= package.title %></h4>
-                                    <span class="package_badge">FREE</span>
+            <% if (packages.length) { %>
+                <ul class="stage">
+                    <% for (let package of packages) { %>
+                        <li class="package_popular">
+                            <div class="movie">
+                                <div class="poster">
+                                    <img src="<%= package.coverUrl %>" alt="">
                                 </div>
-            
-                                <%
-                                    const lengthOfExcerpt = 260;
-                                    const excerptContent = package.rawContent.slice(0, lengthOfExcerpt);
-                                %>
-                                <p><%= excerptContent %> ...</p>
-            
-                                <a href="/package/<%= package.id %>" class="btn btn-sm btn-outline-info read_more_package">Go to package</a>
+                                <div class="info">
+                                    <div class="header_package">
+                                        <img src="<%= package.imageUrl %>" alt="">
+                                        <h4><%= package.title %></h4>
+                                        <span class="package_badge">FREE</span>
+                                    </div>
+                
+                                    <%
+                                        const lengthOfExcerpt = 260;
+                                        const excerptContent = package.rawContent.slice(0, lengthOfExcerpt);
+                                    %>
+                                    <p><%= excerptContent %> ...</p>
+                
+                                    <a href="/package/<%= package.id %>" class="btn btn-sm btn-outline-info read_more_package">Go to package</a>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                <% } %>
-            </ul>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } else { %>
+                <div class="alert alert-info mt-5">No Packages yet</div>
+            <% } %>
+            
         </div>
         <div class="clearfix"></div>
     </div>
