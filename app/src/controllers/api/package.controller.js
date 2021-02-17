@@ -91,3 +91,16 @@ export const getAll = async (req, res) => {
         packages.sort((a, b) => b.createdAt - a.createdAt)
     )
 }
+
+export const morePackages = async (req, res) => {
+    const { page } = req.query
+    const size = 4; // TODO : Read from parameters or somewhere ...
+
+    let packages = await Package.findAll({
+        offset: page*size,
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 1000)); // modeling delay of server
+
+    res.render('front/morePackages', {packages})
+}

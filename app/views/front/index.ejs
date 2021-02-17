@@ -51,9 +51,9 @@
     <div class="container partition_with_title">
         <h3 class="title_partition font-weight-bold">Most favorite Packages</h3>
         <div class="wrapper">
-            <% if (packages.length) { %>
+            <% if (favoritePackages.length) { %>
                 <ul class="stage">
-                    <% for (let package of packages) { %>
+                    <% for (let package of favoritePackages) { %>
                         <li class="package_popular">
                             <div class="movie">
                                 <div class="poster">
@@ -111,6 +111,29 @@
             <% } %>
         </div>
     </div>
+
+    <div class="container partition_with_title">
+        <h3 class="title_partition font-weight-bold">Packages</h3>
+        <section id="package_section">
+            <% if (packages.length) { %>
+                <div class="row">
+                    <%- include('morePackages.ejs', packages) %>
+                </div>
+            <% } else { %>
+                <div class="alert alert-info mt-3 text-center"> No packages </div>
+            <% } %>
+            <% if (packages.length) { %>
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <a href="#" id="load_more_packages" class="load_more_contents" data-page="1">
+                            <img src="/images/load_more.gif" alt="Load more posts" id="load_more_packages_gif">
+                            <span id="load_more_packages_txt">More packages</span>
+                        </a>
+                    </div>
+                </div>
+            <% } %>
+        </section>
+    </div>
     
     <%- include('footer') %>
 
@@ -144,6 +167,43 @@
                         } else{
                             $("#load_more_posts_txt").show().text('No more posts');
                             $("#load_more_posts_gif").hide();
+                            $this.addClass("no_more_contents")
+                        }
+                    },
+                    error:function () {
+                        $("#load_more_posts_txt").show();
+                        $("#load_more_posts_gif").hide();
+                    }
+                });
+            });
+
+
+            $("#load_more_packages").on('click',function (event) {
+                event.preventDefault();
+                const $this = $(this);
+
+                if ($this.hasClass("no_more_contents")) {
+                    return;
+                }
+
+                const $page = parseInt($this.data('page'));
+                $("#load_more_packages_txt").hide();
+                $("#load_more_packages_gif").show();
+                $.ajax({
+                    url : "/api/package/more",
+                    type : 'GET',
+                    data:{
+                        page : $page
+                    },
+                    success:function (response) {
+                        if(response){
+                            $("#package_section > .row:first-of-type").append(response);
+                            $this.data('page',$page + 1);
+                            $("#load_more_packages_txt").show();
+                            $("#load_more_packages_gif").hide();
+                        } else{
+                            $("#load_more_packages_txt").show().text('No more packages');
+                            $("#load_more_packages_gif").hide();
                             $this.addClass("no_more_contents")
                         }
                     },

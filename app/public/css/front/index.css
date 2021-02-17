@@ -627,6 +627,9 @@ h4.package_title {
     text-align: center;
     margin: 7px;
     color: #2d3436;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
 }
 a.package_more_detail {
     position: absolute;
@@ -640,7 +643,7 @@ a.package_more_detail {
     height: 50px;
     text-align: center;
     padding: 14px;
-    font-size: 13px;
+    font-size: 15px;
     transition-duration: 0.3s;
 }
 .package:hover .package_more_detail{

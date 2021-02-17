@@ -26,13 +26,17 @@ export const index = async (req, res) => {
         commentsCount: await Comment.count(),
     }
 
-    let packages = await Package.findAll({
+    let favoritePackages = await Package.findAll({
         order: [
             ['likes', 'DESC'],
             ['view', 'DESC']
         ],
         limit: 3
     }) // TODO : We can order by number of sells 
+
+    let packages = await Package.findAll({
+        limit: 4
+    })
 
     let posts = await Post.findAll({
         limit: 3, // TODO : Read from parameters or somewhere ...
@@ -49,6 +53,7 @@ export const index = async (req, res) => {
         whichRouter: getWhichRouterForTopMenu(req),
         topPosts,
         statistics,
+        favoritePackages,
         packages,
         posts,
     });
