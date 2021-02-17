@@ -10,14 +10,15 @@ import frontRouter from "./routers/front/front.router.js"
 import { authenticated, authorize } from "./middlewares/auth.js"
 import profileRouter from "./routers/profile/profile.router.js"
 import { notFound } from "./controllers/default.controller.js"
-import sequelize from "./models/index.js"
 import path from "path"
 import session from "express-session"
 import { flash } from "express-flash-message"
 import redis from 'redis'
 import ConnectRedis from 'connect-redis'
+import startup from './startup.js'
 
-await sequelize.sync()
+
+await startup()
 
 const hostname = "0.0.0.0";
 const port = 3000;
