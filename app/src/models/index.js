@@ -53,12 +53,14 @@ User.hasMany(Post)
 User.belongsToMany(Post, {as: 'favoritePosts', through: UserLikePost})
 Post.belongsToMany(User, {as: 'usersFavorite', through: UserLikePost})
 
-User.hasOne(PaymentLog, {
-    foreignKey: 'UserId'
+User.belongsToMany(Package, {
+    as: 'userPackages',
+    through: PaymentLog
 })
 
-Package.hasOne(PaymentLog, {
-    foreignKey: 'PackageId'
+Package.belongsToMany(User, {
+    as: 'packageUsers',
+    through: PaymentLog
 })
 
 Post.hasOne(PostViewLog, {
