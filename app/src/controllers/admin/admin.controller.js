@@ -13,7 +13,7 @@ export const index = async (req, res) => {
         attributes: ['date', [sequelize.fn('sum', sequelize.col('views')), 'views']],
         group: ['date'],
         limit: 7,
-        order: [['date', 'DESC']]
+        order: [['date', 'ASC']]
     })
 
     res.render('admin/home/index', {
