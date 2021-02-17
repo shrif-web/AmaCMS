@@ -71,6 +71,9 @@ export const getPost = async (req, res) => {
         if (!viewLog) {
             viewLog = await PostViewLog.create({
                 PostId: post.id,
+                date: now,
+            }, {
+                transaction: transaction
             })
         }
 

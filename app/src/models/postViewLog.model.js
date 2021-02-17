@@ -9,9 +9,6 @@ const PostViewLog = sequelize.define('PostViewLog', {
     date: {
         type: Types.DATEONLY,
         primaryKey: true,
-        get: function () {
-            return moment(this.getDataValue('date')).format('YYYY-MM-DD');
-        },
     },
     views: {
         type: Types.INTEGER,
