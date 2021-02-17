@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= package.title %></title>
+
+    <%- include('../../common/style') %>
+    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/post.css">
+</head>
+<body>
+    <%- include('../top_menu') %>
+    
+
+    <div class="container container_white_title mt-4">
+        <h2><%= package.title %></h2>
+    </div>
+    <div class="container single_container_post pb-4" id="container_white">
+        <div class="post_meta d-flex align-items-center">
+            <span class="d-flex align-items-center"><i class="fad fa-calendar-alt"></i> <span><%= package.createdAt.days %> <%= package.createdAt.toLocaleString([], {year: 'numeric', month: 'long', day: 'numeric'}) %></span></span>
+            <span class="d-flex align-items-center"><i class="fad fa-layer-group"></i> <span><%= package.Category ? package.Category.name : "No category" %></span></span>
+            <span class="d-flex align-items-center"><i class="fad fa-eye"></i> <span><%= package.view %></span></span>
+            <span class="d-flex align-items-center"><i class="fal fa-shopping-cart"></i> <span><%= package.sellCount %></span></span>
+        </div>
+        <div class="post_content_wrapper mb-4">
+            <img src="<%= package.imageUrl %>" alt="Post Thumbnail" class="post-image">
+            <%- package.description %>
+        </div>
+        <div class="m-auto d-flex align-items-center justify-content-center">
+            <% if (isBoughtByUser) { %>
+                <div class="btn btn-outline-info d-flex align-items-center" style="width: 230px;" id="downloadPackage">
+                    <i class="fal fa-download mr-2"></i>
+                    |
+                    <span class="ml-2">Download this package</span>
+                </div>
+            <% } else { %>
+                <span class="text-success mr-3"><i class="fa fa-dollar-sign"></i> <%= package.price.priceFormat() %></span>
+                <div class="btn btn-outline-success d-flex align-items-center" style="width: 190px;" id="buyPackage">
+                    <i class="fal fa-shopping-cart mr-2"></i>
+                    |
+                    <span class="ml-2">Buy this package</span>
+                </div>
+            <% } %>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <%- include('../footer') %>
+
+    <%- include('../../common/js') %>
+
+    <script src="/js/front/topMenu.js"></script>
+</body>
+</html>
