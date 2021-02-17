@@ -8,10 +8,12 @@
     <title>A.M.A Dev CMS</title>
 
     <%- include('../common/style') %>
-        <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
-        <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
-        <link rel="stylesheet" type="text/css" href="/css/front/index.css">
-        <link rel="stylesheet" text="text/css" href="/css/common/spinner.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/front/topMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/front/index.css">
+    <link rel="stylesheet" text="text/css" href="/css/common/spinner.css">
+    <link rel="stylesheet" text="text/css" href="/css/front/search.css">
 </head>
 
 <body>
@@ -143,15 +145,17 @@
             </section>
         </div>
 
-        <div id="loader-wrapper" style="opacity: 0; display: none;">
+        <div id="loader-wrapper" style="display: none;">
             <div id="loader"></div>
         </div>
+
+        <%- include('searchModal') %>
 
         <%- include('footer') %>
 
             <%- include('../common/js') %>
 
-            <script src="js/front/search.js" defer></script>
+                <script src="js/front/search.js" defer></script>
 
                 <script>
                     $(document).ready(function() {
