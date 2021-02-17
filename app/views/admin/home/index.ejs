@@ -8,150 +8,146 @@
     <title>Admin Dashboard</title>
 
     <%- include('../common/style') %>
-        <style>
-            .thickLine {
-                border-top-width: 4px;
-            }
-            
-            .class-label {
-                background: #34495e;
-                padding: 2px 5px;
-                border-radius: 3px;
-                color: white;
-            }
-            
-            .class-label:not(:last-of-type) {
-                margin-right: 1px;
-            }
-            
-            .circle-color {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                margin: 0 auto;
-            }
-            
-            .single-info-container:not(:first-of-type) {
-                margin-left: 15px;
-            }
-            
-            .single-info-container {
-                padding: 4px 8px;
-                border-radius: 5px;
-            }
-            
-            .single-info-container.red-info {
-                border: #e74c3c;
-                color: #e74c3c;
-                box-shadow: 1px 1px 4px #e74c3c;
-            }
-            
-            .single-info-container.asphalt-info {
-                border: #34495e;
-                color: #34495e;
-                box-shadow: 1px 1px 4px #34495e;
-            }
-        </style>
+    <style>
+        .thickLine {
+            border-top-width: 4px;
+        }
+        
+        .class-label {
+            background: #34495e;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: white;
+        }
+        
+        .class-label:not(:last-of-type) {
+            margin-right: 1px;
+        }
+        
+        .circle-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        
+        .single-info-container:not(:first-of-type) {
+            margin-left: 15px;
+        }
+        
+        .single-info-container {
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+        
+        .single-info-container.red-info {
+            border: #e74c3c;
+            color: #e74c3c;
+            box-shadow: 1px 1px 4px #e74c3c;
+        }
+        
+        .single-info-container.asphalt-info {
+            border: #34495e;
+            color: #34495e;
+            box-shadow: 1px 1px 4px #34495e;
+        }
+    </style>
 </head>
 
 <body>
     <%- include('../common/nav') %>
 
-        <div class="container mt-5">
-            <div class="card">
-                <div class="card-header">
-                    <i class="align-middle fal fa-chart-bar fa-2x"></i>
-                    <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Dashboard</h4>
-                </div>
-                <div class="card-body">
-                    <h5 class="d-flex align-items-center">
-                        <i class="fal fa-link mr-2" style="font-size: 30px;"></i> Social Media
-                        <a href="/admin/social_media/create" class="btn btn-sm btn-outline-success ml-auto">
-                            <i class="fal fa-plus"></i> Create
-                        </a>
-                    </h5>
-                    <hr class="thickLine">
-                    <table class="table table-bordered text-center">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Link</th>
-                            <th>Class</th>
-                            <th>Icon</th>
-                            <th>Color</th>
-                            <th>Operation</th>
-                        </tr>
-                        <% if (socialMedias.length > 0) { %>
-                            <% for (socialMedia of socialMedias) { %>
-                                <tr>
-                                    <td style="width: 10%;">
-                                        <%= socialMedia.id %>
-                                    </td>
-                                    <td>
-                                        <%= socialMedia.name %>
-                                    </td>
-                                    <td>
-                                        <%= socialMedia.link %>
-                                    </td>
-                                    <td>
-                                        <% for(let c of socialMedia.class.split(" ")) { %>
-                                            <% c = c.trim(); %>
-                                                <span class="class-label"><%= c %></span>
-                                                <% } %>
-                                    </td>
-                                    <td><i class="<%= socialMedia.class %>"></i></td>
-                                    <td>
-                                        <div class="circle-color" style="background: <%= socialMedia.color %>"></div>
-                                    </td>
-                                    <td style="width: 10%;">
-                                        <a href="/admin/social_media/delete/<%= socialMedia.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
-                                        <a href="/admin/social_media/edit/<%= socialMedia.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
-                                    </td>
-                                </tr>
-                                <% } %>
-                                    <% } else { %>
-                                        <tr>
-                                            <td colspan="7">
-                                                <div class="alert alert-info mt-2 text-center">No Social Media</div>
-                                                </th>
-                                        </tr>
-                                        <% } %>
-                    </table>
-                    <h5 class="d-flex align-items-center mt-5">
-                        <i class="fal fa-heart mr-2" style="font-size: 30px;"></i> Most Favorite Posts
-                    </h5>
-                    <hr class="thickLine">
-                    <% if (favoritePosts.length) { %>
-                        <% for (let pIndex = 0 ; pIndex < favoritePosts.length ; pIndex++) { %>
-                            <% let post = favoritePosts[pIndex]; %>
-                                <div class="post-container d-flex align-items-center">
-                                    <% if (post.imageUrl) { %>
-                                        <img src="<%= post.imageUrl %>" alt="" style="width: 130px; height: 80px; border-radius: 4px;">
-                                        <% } else { %>
-                                            <div class="post-thumb-tmp">
-                                                <i class="fad fa-image"></i>
-                                            </div>
-                                            <% } %>
-                                                <a href="/post/<%= post.id %>" class="ml-4">
-                                                    <%= post.title %>
-                                                </a>
-                                                <div class="post-information-container d-flex ml-3">
-                                                    <div class="single-info-container red-info"><span><i class="fal fa-heart"></i> <%= post.likes %></span></div>
-                                                    <div class="single-info-container asphalt-info"><span><i class="fad fa-eye"></i> <%= post.views %></span></div>
-                                                </div>
-                                </div>
-                                <% if (pIndex != favoritePosts.length - 1) { %>
-                                    <hr>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="align-middle fal fa-chart-bar fa-2x"></i>
+                <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Dashboard</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="d-flex align-items-center">
+                    <i class="fal fa-link mr-2" style="font-size: 30px;"></i>
+                    Social Media
+                    <a href="/admin/social_media/create" class="btn btn-sm btn-outline-success ml-auto">
+                        <i class="fal fa-plus"></i>
+                        Create
+                    </a>
+                </h5>
+                <hr class="thickLine">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Link</th>
+                        <th>Class</th>
+                        <th>Icon</th>
+                        <th>Color</th>
+                        <th>Operation</th>
+                    </tr>
+                    <% if (socialMedias.length > 0) { %>
+                        <% for (socialMedia of socialMedias) { %>
+                            <tr>
+                                <td style="width: 10%;"><%= socialMedia.id %></td>
+                                <td><%= socialMedia.name %></td>
+                                <td><%= socialMedia.link %></td>
+                                <td>
+                                    <% for(let c of socialMedia.class.split(" ")) { %>
+                                        <% c = c.trim(); %>
+                                        <span class="class-label"><%= c %></span>
                                     <% } %>
-                                        <% } %>
-                                            <% } else { %>
-                                                <p class="alert alert-warning">No favorite posts</p>
-                                                <% } %>
-                </div>
+                                </td>
+                                <td><i class="<%= socialMedia.class %>"></i></td>
+                                <td>
+                                    <div class="circle-color" style="background: <%= socialMedia.color %>"></div>
+                                </td>
+                                <td style="width: 10%;">
+                                    <a href="/admin/social_media/delete/<%= socialMedia.id %>" class="text-danger"><i class="fa fa-trash-alt"></i></a>
+                                    <a href="/admin/social_media/edit/<%= socialMedia.id %>" class="text-primary"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7">
+                                <div class="alert alert-info mt-2 text-center">No Social Media</div>
+                                </th>
+                        </tr>
+                    <% } %>                
+                </table>
+                <h5 class="d-flex align-items-center mt-5">
+                    <i class="fal fa-heart mr-2" style="font-size: 30px;"></i> Most Favorite Posts
+                </h5>
+                <hr class="thickLine">
+                <% if (favoritePosts.length) { %>
+                    <% for (let pIndex = 0 ; pIndex < favoritePosts.length ; pIndex++) { %>
+                        <% let post = favoritePosts[pIndex]; %>
+                            <div class="post-container d-flex align-items-center">
+                                <% if (post.imageUrl) { %>
+                                    <img src="<%= post.imageUrl %>" alt="" style="width: 130px; height: 80px; border-radius: 4px;">
+                                <% } else { %>
+                                    <div class="post-thumb-tmp">
+                                        <i class="fad fa-image"></i>
+                                    </div>
+                                <% } %>
+                                <a href="/post/<%= post.id %>" class="ml-4">
+                                    <%= post.title %>
+                                </a>
+                                <div class="post-information-container d-flex ml-3">
+                                    <div class="single-info-container red-info"><span><i class="fal fa-heart"></i> <%= post.likes %></span></div>
+                                    <div class="single-info-container asphalt-info"><span><i class="fad fa-eye"></i> <%= post.views %></span></div>
+                                </div>
+                            </div>
+                        <% if (pIndex != favoritePosts.length - 1) { %>
+                            <hr>
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                    <p class="alert alert-warning">No favorite posts</p>
+                <% } %>
             </div>
         </div>
+    </div>
 
-        <%- include('../common/js') %>
+    <%- include('../common/js') %>
 </body>
 
 </html>
