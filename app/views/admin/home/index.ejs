@@ -23,6 +23,28 @@
             border-radius: 50%;
             margin: 0 auto;
         }
+
+        .single-info-container:not(:first-of-type) {
+            margin-left: 15px;
+        }
+
+        .single-info-container {
+            padding: 4px 8px;
+            border-radius: 5px;
+            
+        }
+
+        .single-info-container.red-info {
+            border: #e74c3c;
+            color: #e74c3c;
+            box-shadow: 1px 1px 4px #e74c3c;
+        }
+
+        .single-info-container.asphalt-info {
+            border: #34495e;
+            color: #34495e;
+            box-shadow: 1px 1px 4px #34495e;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +106,35 @@
                         </tr>
                     <% } %>
                 </table>
+                <h5 class="d-flex align-items-center mt-5">
+                    <i class="fal fa-heart mr-2" style="font-size: 30px;"></i>
+                    Most Favorite Posts
+                </h5>
+                <hr>
+                <% if (favoritePosts.length) { %>
+                    <% for (let pIndex = 0 ; pIndex < favoritePosts.length ; pIndex++) { %>
+                        <% let post = favoritePosts[pIndex]; %>
+                        <div class="post-container d-flex align-items-center">
+                            <% if (post.imageUrl) { %>
+                                <img src="<%= post.imageUrl %>" alt="" style="width: 130px; height: 80px; border-radius: 4px;">
+                            <% } else { %>
+                                <div class="post-thumb-tmp">
+                                    <i class="fad fa-image"></i>
+                                </div>
+                            <% } %>
+                            <a href="/post/<%= post.id %>" class="ml-4"><%= post.title %></a>
+                            <div class="post-information-container d-flex ml-3">
+                                <div class="single-info-container red-info"><span><i class="fal fa-heart"></i> <%= post.likes %></span></div>
+                                <div class="single-info-container asphalt-info"><span><i class="fad fa-eye"></i> <%= post.views %></span></div>
+                            </div>
+                        </div>
+                        <% if (pIndex != favoritePosts.length - 1) { %>
+                            <hr>
+                        <% } %>
+                    <% } %>
+                <% } else { %>
+                    <p class="alert alert-warning">No favorite posts</p>
+                <% } %>
             </div>
         </div>
     </div>
