@@ -6,6 +6,7 @@ const submit = (method, url) => {
         fileUrl: $('#file-url').val(),
         price: Number($('#package-price').val()),
         coverUrl: $('#cover-url').val(),
+        CategoryId: idByName[$("#category-select").Title()],
     }
 
     console.log(the_package)

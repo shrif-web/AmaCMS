@@ -4,7 +4,7 @@ import User from "../../models/user.model.js"
 import UserLikePost from "../../models/userLikePost.model.js"
 
 export const create = async (req, res) => {
-    const { title, imageUrl, content } = req.body
+    const { title, imageUrl, content, CategoryId } = req.body
 
     const transaction = await sequelize.transaction()
 
@@ -13,6 +13,7 @@ export const create = async (req, res) => {
             title: title,
             imageUrl: imageUrl,
             content: content,
+            CategoryId: CategoryId,
             UserId: req.session.user.id,
         }, {
             transaction: transaction
@@ -68,7 +69,7 @@ export const deleteById = async (req, res) => {
 
 export const update = async (req, res) => {
     const id = req.params.id
-    const { title, imageUrl, content } = req.body
+    const { title, imageUrl, content, CategoryId } = req.body
     const post = await Post.findOne({
         where: {
             id: id
@@ -88,6 +89,7 @@ export const update = async (req, res) => {
         post.title = title === undefined ? post.title : title
         post.imageUrl = imageUrl === undefined ? post.imageUrl : imageUrl
         post.content = content === undefined ? post.content : content
+        post.CategoryId = CategoryId === undefined ? post.CategoryId : CategoryId
 
         await post.save({
             transaction: transaction

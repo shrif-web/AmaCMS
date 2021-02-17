@@ -1,0 +1,19 @@
+<script>
+    const categories = JSON.parse('<%- JSON.stringify(categories) %>')
+    const idByName = JSON.parse('<%- JSON.stringify(categoryIdByName) %>')
+
+    var options = {
+        title: "Category",
+        data: categories,
+        maxHeight: 3000,
+        clickHandler: element => {
+            const name = $(element).find("a").first().text()
+            $("#category-select").Title(name);
+        },
+        closedArrow: '<i class="fa fa-caret-right" aria-hidden="true"></i>',
+        openedArrow: '<i class="fa fa-caret-down" aria-hidden="true"></i>',
+        multiSelect: true,
+    }
+
+    $("#category-select").DropDownTree(options);
+</script>
