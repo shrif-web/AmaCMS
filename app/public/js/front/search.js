@@ -3,6 +3,7 @@ const loading = () => {
 }
 
 const showSearchResults = results => {
+    // TODO: Arman
     /*  results: array of {
             title,
             imageUrl, 
@@ -15,6 +16,10 @@ const showSearchResults = results => {
                 lastName,
             },
         } */
+}
+
+const error = response => {
+    // TODO: Arman
 }
 
 const sleep = time => {
@@ -30,7 +35,7 @@ const search = () => {
     const query = $('#search_input').val()
     console.log(`searcing ${query}`);
 
-    // TODO: switch to loading mode
+    
 
     $.get(`/api/search?q=${query}`)
         .done(response => {
