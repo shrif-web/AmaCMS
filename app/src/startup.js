@@ -8,12 +8,13 @@ const createSuperUser = async () => {
             role: User.roles.ADMIN
         }
     })
-
-    const salt = await bcrypt.genSalt(10)
-    const passwordHash = await bcrypt.hash(process.env.SU_PASSWORD, salt)
-
+    
     if (adminCount == 0) {
         console.log('No superuser found! Creating the superuser from env SU_EMAIL and SU_PASSWORD')
+
+        const salt = await bcrypt.genSalt(10)
+        const passwordHash = await bcrypt.hash(process.env.SU_PASSWORD, salt)
+
         await User.create({
             email: process.env.SU_EMAIL,
             firstName: 'super',
