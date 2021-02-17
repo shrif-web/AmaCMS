@@ -8,6 +8,10 @@
 
     <%- include('../common/style') %>
     <style> 
+        .thickLine {
+            border-top-width: 4px;
+        }
+
         .class-label {
             background: #34495e;
             padding: 2px 5px;
@@ -65,7 +69,7 @@
                         Create
                     </a>
                 </h5>
-                <hr>
+                <hr class="thickLine">
                 <table class="table table-bordered text-center">
                     <tr>
                         <th>ID</th>
@@ -110,7 +114,7 @@
                     <i class="fal fa-heart mr-2" style="font-size: 30px;"></i>
                     Most Favorite Posts
                 </h5>
-                <hr>
+                <hr class="thickLine">
                 <% if (favoritePosts.length) { %>
                     <% for (let pIndex = 0 ; pIndex < favoritePosts.length ; pIndex++) { %>
                         <% let post = favoritePosts[pIndex]; %>
