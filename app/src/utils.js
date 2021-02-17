@@ -9,7 +9,17 @@ export function fullUrl(req) {
 };
 
 export function getWhichRouterForTopMenu(req) {
-    return {
-        isHome: req.route.path == '/home',
+    let which = {
+        isHome: req.route.path == '/',
     }
+
+    let nothing = true;
+    for (let key in which) {
+        if (which[key]) {
+            nothing = false;
+        }
+    }
+    which.nothing = nothing;
+
+    return which;
 }

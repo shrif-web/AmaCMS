@@ -22,9 +22,11 @@
     <div class="container" id="nav_header">
         <nav class="nav-wrap">
             <ul class="group" id="header_menu">
-                <li class="current_page_item" style="width: 0; overflow: hidden;">
-                    <a href=""></a>
-                </li>
+                <% if (whichRouter.nothing) { %>
+                    <li class="current_page_item" style="width: 0; overflow: hidden;">
+                        <a href=""></a>
+                    </li>
+                <% } %>
                 <li class="<%= whichRouter.isHome ? 'current_page_item' : '' %>">
                     <a href="/"">
                         <i class="fa fa-home"></i>
