@@ -7,6 +7,7 @@ import Comment from "./comment.model.js"
 import User from "./user.model.js"
 import UserLikePost from "./userLikePost.model.js"
 import sequelize from "../services/mysql.js"
+import PaymentLog from "./paymentLog.model.js"
 
 Category.belongsTo(Category, {
     onDelete: 'CASCADE',
@@ -50,5 +51,13 @@ User.hasMany(Post)
 
 User.belongsToMany(Post, {as: 'favoritePosts', through: UserLikePost})
 Post.belongsToMany(User, {as: 'usersFavorite', through: UserLikePost})
+
+PaymentLog.hasOne(User, {
+    foreignKey: 'UserId'
+})
+
+PaymentLog.hasOne(Package, {
+    foreignKey: 'PackageId'
+})
 
 export default sequelize
