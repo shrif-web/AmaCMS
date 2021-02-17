@@ -8,7 +8,7 @@ const showSearchResults = results => {
             id,
             title,
             imageUrl, 
-            content : array of text,
+            content,
             views,
             createdAt,
             likes,
@@ -29,9 +29,10 @@ const sleep = time => {
 
 const getContent = result => {
     if (result.highlight) {
-        return result.highlight.content.map(highlight => `...${highlight}...`)
+        const concatted = result.highlight.content.join('...')
+        return `...${concatted}...`
     }
-    return [`${result._source.content.slice(0, 100)}...`]
+    return `${result._source.content.slice(0, 100)}...`
 }
 
 const prepareResults = response => {
