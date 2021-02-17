@@ -12,6 +12,7 @@
     <script src="/js/admin/tinymce.min.js"></script>
     <script src="/js/admin/dropzone.js"></script>
     <link rel="stylesheet" href="/css/admin/dropzone.css">
+    <link rel="stylesheet" href="/css/admin/dropdowntree.css">
 
     <%- include('../common/style') %>
 </head>
@@ -31,6 +32,7 @@
                     <hr>
                     <div class="form-row">
                         <input id="package-title" class="form-control col m-1" type="text" placeholder="Title">
+                        <div class="dropdown dropdown-tree col-2 m-1" id="category-select"></div>
                         <input id="package-price" class="form-control col-3 m-1" type="number" placeholder="Price">
                         <button onclick="submit('<%= submit_btn.method %>', '<%= submit_btn.url %>')"
                             class="btn btn-success m-1">
@@ -77,18 +79,25 @@
             </div>
         <% } %>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <%- include('../common/js') %>
-            <script src="/js/admin/editor.js"></script>
-            <script src="/js/admin/package.js"></script>
-            <script>
-                $(document).ready(() => {
-                    $('#package-title').val('<%= the_package.title %>')
-                    $('#image-url').val('<%= the_package.imageUrl %>')
-                    $('#cover-url').val('<%= the_package.coverUrl %>')
-                    $('#file-url').val('<%= the_package.fileUrl %>')
-                    $('#package-price').val('<%= the_package.price %>')
-                })
-            </script>
+        <script src="/js/admin/editor.js"></script>
+        <script src="/js/admin/dropdowntree.js"></script>
+        <%- include('../category/dropdowntree') %> 
+        <script src="/js/admin/package.js"></script>
+        <script>
+            $(document).ready(() => {
+                $('#package-title').val('<%= the_package.title %>')
+                $('#image-url').val('<%= the_package.imageUrl %>')
+                $('#cover-url').val('<%= the_package.coverUrl %>')
+                $('#file-url').val('<%= the_package.fileUrl %>')
+                $('#package-price').val('<%= the_package.price %>')
+                const packageCategory = JSON.parse('<%- JSON.stringify(packageCategory) %>')
+                if (packageCategory) {
+                    $('#category-select').Title(packageCategory.name)
+                }
+            })
+        </script>
 </body>
 
 </html>
