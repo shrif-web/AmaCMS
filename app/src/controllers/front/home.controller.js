@@ -6,6 +6,7 @@ import UserLikePost from "../../models/userLikePost.model.js"
 import { getWhichRouterForTopMenu } from "./../../utils.js"
 import { getCurrentUser } from "./../../services/auth.js"
 import Package from "../../models/package.model.js";
+import redisClient from "../../services/redis.js"
 
 export const index = async (req, res) => {
     const topPosts = await Post.findAll({
@@ -19,12 +20,7 @@ export const index = async (req, res) => {
     const socialMedias = await SocialMedia.findAll();
     const user = await getCurrentUser(req);
 
-    const statistics = {
-        usersCount: await User.count(),
-        postsCount: await Post.count(),
-        packagesCount: await Package.count(),
-        commentsCount: await Comment.count(),
-    }
+    const statistics = await redisClient.homeStatistics()
 
     let favoritePackages = await Package.findAll({
         order: [
