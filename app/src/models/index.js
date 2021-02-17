@@ -8,6 +8,7 @@ import User from "./user.model.js"
 import UserLikePost from "./userLikePost.model.js"
 import sequelize from "../services/mysql.js"
 import PaymentLog from "./paymentLog.model.js"
+import PostViewLog from "./postViewLog.model.js"
 
 Category.belongsTo(Category, {
     onDelete: 'CASCADE',
@@ -58,6 +59,10 @@ User.hasOne(PaymentLog, {
 
 Package.hasOne(PaymentLog, {
     foreignKey: 'PackageId'
+})
+
+Post.hasOne(PostViewLog, {
+    foreignKey: 'PostId'
 })
 
 export default sequelize

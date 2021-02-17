@@ -64,7 +64,9 @@
                 <h6 class="d-inline font-weight-light ml-2 align-middle font-weight-bold">Dashboard</h4>
             </div>
             <div class="card-body">
-                <h5 class="d-flex align-items-center">
+                <canvas id="fileDownloadChart" width="200" height="100"></canvas>
+
+                <h5 class="d-flex align-items-center mt-5">
                     <i class="fal fa-link mr-2" style="font-size: 30px;"></i>
                     Social Media
                     <a href="/admin/social_media/create" class="btn btn-sm btn-outline-success ml-auto">
@@ -148,6 +150,37 @@
     </div>
 
     <%- include('../common/js') %>
+
+    <script src="/js/common/chart.bundle.min.js"></script>
+    <script>
+        var ctx = document.getElementById('fileDownloadChart').getContext('2d');
+        var fileDownloadChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: JSON.parse('<%- JSON.stringify(viewsStat.key) %>'),
+                datasets: [{
+                    label: 'Total Views',
+                    data: JSON.parse('<%- JSON.stringify(viewsStat.val) %>'),
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
