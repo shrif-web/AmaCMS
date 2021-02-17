@@ -24,10 +24,8 @@
                     <h2 class="hero_title">Tutorial packages for all levels</h2>
                     <h3 class="hero_title_desc">Daily posts for developers</h3>
                     <div class="search-wrapper">
-                        <form action="" method="get">
-                            <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
-                            <button id="search_btn" name=""><i class="fas fa-search"></i></button>
-                        </form>
+                        <input type="text" placeholder="Search ..." id="search_input" name="s" autocomplete="off">
+                        <button onclick="search()" id="search_btn" name=""><i class="fas fa-search"></i></button>
                     </div>
                     <div class="row site_stat">
                         <div class="col-3">
@@ -152,6 +150,8 @@
         <%- include('footer') %>
 
             <%- include('../common/js') %>
+
+            <script src="js/front/search.js" defer></script>
 
                 <script>
                     $(document).ready(function() {

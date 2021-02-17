@@ -54,7 +54,7 @@ const prepareResults = response => {
 
 const search = () => {
     const query = $('#search_input').val()
-    console.log(`searcing ${query}`);
+    console.log(`searching ${query}`);
 
     loading()
 
@@ -63,6 +63,7 @@ const search = () => {
             sleep(1000) // just for dev
                 .then(() => {
                     const results = prepareResults(response)
+                    console.log(results);
                     showSearchResults(results)
                 })
         }).fail(response => error(response))
