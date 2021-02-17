@@ -14,17 +14,15 @@
 
     <div class="container mt-5">
         <% for (const key in settings) { %> 
-            <form onsubmit="update('<%= key %>')">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><%= key %></span>
-                    </div>
-                    <input id="<%= key %>-value" type="text" class="form-control" placeholder="<%= key %>" aria-label="<%= key %>" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-success" type="submit">Update</button>
-                    </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><%= key %></span>
                 </div>
-            </form>
+                <input id="<%= key %>-value" type="text" class="form-control" placeholder="<%= key %>" aria-label="<%= key %>" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button onclick="update('<%= key %>')" class="btn btn-outline-success">Update</button>
+                </div>
+            </div>
         <% } %> 
     </div>
     
@@ -45,7 +43,7 @@
                 method: 'PUT',
                 data: JSON.stringify(setting),
                 contentType: 'application/json'
-            }).done(response => console.log('done'))
+            }).done(response => window.location.reload())
             .fail(response => alert(response.error))
         }
     </script>
